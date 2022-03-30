@@ -10,6 +10,7 @@ import DonationSuccess from './routes/donation-success'
 import Wallteconnect from './routes/wallet-connect'
 import Profile from './routes/profile'
 import AOS from 'aos'
+
 import 'aos/dist/aos.css'
 
 const App: FC = () => {
