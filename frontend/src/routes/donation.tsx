@@ -1,21 +1,34 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import Account from '../components/Account'
 import CardNFT from '../components/CardNFT'
 import TextBox from '../components/TextBox'
 import { data } from '../data/response'
 import { style } from '../data/style'
 import { CardStateType } from '../lib/type'
+import { accountInfoState } from '../state/atom'
 
 const Donation: FC = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+
+  const accountInfo = useRecoilValue(accountInfoState)
+  const { active } = accountInfo
+
+  useEffect(() => {
+    !active && navigate('/wallet-connect')
+  }, [active, navigate])
 
   // view
   return (
     <div className="max-w-2xl mx-auto pt-4 md:pt-6">
-      <div data-aos="fade-up" className={`${style.contentInterval}`}>
-        <Account />
-      </div>
+      {active && (
+        <div data-aos="fade-up" className={`${style.contentInterval}`}>
+          <Account info={accountInfo} />
+        </div>
+      )}
       <div data-aos="fade-up" data-aos-delay="200" className={`${style.contentInterval}`}>
         <TextBox
           label={t('donation.to_ukraine')}

@@ -2,11 +2,13 @@ import React, { FC } from 'react'
 import { style } from '../data/style'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import WalletDisconnect from './wallet/WalletDisconnect'
+import { AccountInfoType } from '../lib/type'
 
-// interface AccountProps {
-// }
+interface AccountProps {
+  info: AccountInfoType
+}
 
-const Account: FC = () => {
+const Account: FC<AccountProps> = ({ info: { account, balance } }) => {
   return (
     <div className={`${style.roundBox}`}>
       <div className={`${style.innerContentInterval} pt-0`}>
@@ -17,13 +19,13 @@ const Account: FC = () => {
       <div className={style.innerContentInterval}>
         <div
           className={`bg-indigo-900 text-white flex items-center w-min mx-auto ${style.roundContent}`}>
-          <p className="text-sm md:text-base">0xabd3...92211</p>
+          <p className="text-sm md:text-base">{account}</p>
           <button type="button" className="px-2 -mr-2">
             <MdOutlineContentCopy />
           </button>
         </div>
       </div>
-      <p className={`text-lg md:text-xl font-bold  ${style.innerContentInterval}`}>4.445 ETH</p>
+      <p className={`text-lg md:text-xl font-bold ${style.innerContentInterval}`}>{balance} ETH</p>
       <div className={`${style.innerContentInterval} pb-0`}>
         <WalletDisconnect />
       </div>

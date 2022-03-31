@@ -1,33 +1,27 @@
-import { useWeb3React } from '@web3-react/core'
-import React, { FC, useCallback, useEffect } from 'react'
+// import { stringify } from 'querystring'
+import { ethers } from 'ethers'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
 import { walletList } from '../../data/response'
-import { injected } from '../../lib/connection'
-import { Wallet, WalletType } from '../../lib/type'
+import { AccountInfoType, Wallet, WalletType } from '../../lib/type'
+import { accountInfoState } from '../../state/atom'
 import WalletBoxButton from './WalletBoxButton'
 
 const WalletBox: FC = () => {
   const navigate = useNavigate()
-  // const {chainId, account, active, activate, deactivate} = useWeb3React()
-  const { active, account, activate, error: connectError } = useWeb3React()
+  const [account, setAccount] = useState('')
+  const [balance, setBalance] = useState<number | null>(null)
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const wallets: WalletType[] = walletList
+  const [accountInfo, setAccountInfo] = useRecoilState<AccountInfoType>(accountInfoState)
 
-  const connectWallet = (type: keyof typeof Wallet): void => {
-    console.log('active', active)
-    // active && goDonation()
+  const CONNECTACCONT = 'CONNECTACCONT'
+
+  const connectWallet = (type: WalletType): void => {
     type === Wallet.META_MASK ? metaMaskConnect() : walletConnect()
   }
 
-  const metaMaskConnect = async (): Promise<void> => {
-    try {
-      await activate(injected, (error) => {
-        console.log(error.name === 'NoEthereumProviderError')
-      })
-    } catch (error) {
-      console.error(error)
-    }
-  }
   const walletConnect = async (): Promise<void> => {
     // todo..
   }
@@ -36,19 +30,68 @@ const WalletBox: FC = () => {
     navigate('/donation')
   }, [navigate])
 
-  useEffect(() => {
-    if (!active) return
-    goDonation()
-  }, [account, active, goDonation])
+  const metaMaskConnect = async (): Promise<void> => {
+    try {
+      if (!window.ethereum) {
+        // metamask 프로그램 설치 안 되어 있는 경우
+        setErrorMessage('Install MetaMask!')
+        return
+      }
+      // 연결될때까지 await함
+      const [account]: string[] = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      })
+      handleAccount(account)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleAccount = (account: string): void => {
+    setAccount(account)
+    handleBalance(account.toString())
+  }
+
+  const handleBalance = async (account: string): Promise<void> => {
+    const balance: string = await window.ethereum.request({
+      method: 'eth_getBalance',
+      params: [account, 'latest'],
+    })
+    const formatBalace = Number(parseFloat(ethers.utils.formatEther(balance)).toFixed(4))
+    setBalance(formatBalace)
+  }
 
   useEffect(() => {
-    connectError && console.log('error', connectError.message)
-  }, [connectError])
+    // localStorage.setItem('walletAccount', stringify(accountData))
+    if (!account || balance === null) return
+    const accountData = {
+      account,
+      active: true,
+      balance,
+    }
+    setAccountInfo(accountData)
+    console.log('accountData', accountData)
+    goDonation()
+  }, [account, balance, setAccountInfo, goDonation])
+
+  useEffect(() => {
+    if (!localStorage.getItem(CONNECTACCONT)) return
+    // goDonation()
+  }, [])
+
+  useEffect(() => {
+    errorMessage && console.error(errorMessage)
+  }, [errorMessage])
+
+  useEffect(() => {
+    // todo: 값 있을경우 페이지 이동시키기
+    console.log('atom accountInfo', accountInfo)
+  }, [accountInfo])
 
   return (
     <div className="mx-auto md:max-w-md">
       <div className="rounded-lg overflow-hidden">
-        {wallets.map((wallet) => (
+        {walletList.map((wallet) => (
           <WalletBoxButton key={wallet.id} wallet={wallet} connectWallet={connectWallet} />
         ))}
       </div>
