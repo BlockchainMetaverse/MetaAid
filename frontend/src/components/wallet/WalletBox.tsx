@@ -70,7 +70,6 @@ const WalletBox: FC = () => {
       balance,
     }
     setAccountInfo(accountData)
-    console.log('accountData', accountData)
     goDonation()
   }, [account, balance, setAccountInfo, goDonation])
 
@@ -85,7 +84,6 @@ const WalletBox: FC = () => {
 
   useEffect(() => {
     // todo: 값 있을경우 페이지 이동시키기
-    console.log('atom accountInfo', accountInfo)
   }, [accountInfo])
 
   return (
