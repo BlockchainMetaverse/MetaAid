@@ -18,11 +18,11 @@ export const walletList: WalletType[] = [
     type: 'META_MASK',
     title: t('wallet.meta_mask'),
   },
-  {
-    id: 2,
-    type: 'WALLET_CONNECT',
-    title: t('wallet.wallet_connect'),
-  },
+  // {
+  //   id: 2,
+  //   type: 'WALLET_CONNECT',
+  //   title: t('wallet.wallet_connect'),
+  // },
 ]
 
 export const personInfoList: InfoType[] = [
