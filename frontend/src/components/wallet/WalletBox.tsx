@@ -1,15 +1,15 @@
 import { useWeb3React } from '@web3-react/core'
 import React, { FC, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { walletList } from '../data/response'
-import { injected } from '../lib/connection'
-import { Wallet, WalletType } from '../lib/type'
+import { walletList } from '../../data/response'
+import { injected } from '../../lib/connection'
+import { Wallet, WalletType } from '../../lib/type'
 import WalletBoxButton from './WalletBoxButton'
 
 const WalletBox: FC = () => {
   const navigate = useNavigate()
   // const {chainId, account, active, activate, deactivate} = useWeb3React()
-  const { active, account, activate, error } = useWeb3React()
+  const { active, account, activate, error: connectError } = useWeb3React()
 
   const wallets: WalletType[] = walletList
 
@@ -21,12 +21,9 @@ const WalletBox: FC = () => {
 
   const metaMaskConnect = async (): Promise<void> => {
     try {
-      await activate(injected)
-      // await activate(injected, (error) => {
-      //   if('/No Ethereum provider was found on window.ethereum/'.test(error)){
-      //     window.open('https://metamask.io/download.html');
-      //   }
-      // })
+      await activate(injected, (error) => {
+        console.log(error.name === 'NoEthereumProviderError')
+      })
     } catch (error) {
       console.error(error)
     }
@@ -45,8 +42,8 @@ const WalletBox: FC = () => {
   }, [account, active, goDonation])
 
   useEffect(() => {
-    error && console.log('error', error.message)
-  }, [error])
+    connectError && console.log('error', connectError.message)
+  }, [connectError])
 
   return (
     <div className="mx-auto md:max-w-md">

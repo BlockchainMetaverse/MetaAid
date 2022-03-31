@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import TitleBox from '../components/TitleBox'
-import WalletBox from '../components/WalletBox'
+import WalletBox from '../components/wallet/WalletBox'
 import { style } from './../data/style'
 
 const Wallteconnect: FC = () => {

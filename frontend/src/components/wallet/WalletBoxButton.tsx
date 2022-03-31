@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Wallet, WalletType } from '../lib/type'
+import { Wallet, WalletType } from './../../lib/type'
 
 interface WalletBoxButtonProps {
   wallet: WalletType

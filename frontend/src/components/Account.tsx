@@ -1,13 +1,12 @@
 import React, { FC } from 'react'
-import { useTranslation } from 'react-i18next'
 import { style } from '../data/style'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import WalletDisconnect from './wallet/WalletDisconnect'
 
 // interface AccountProps {
 // }
 
 const Account: FC = () => {
-  const { t } = useTranslation()
   return (
     <div className={`${style.roundBox}`}>
       <div className={`${style.innerContentInterval} pt-0`}>
@@ -26,11 +25,7 @@ const Account: FC = () => {
       </div>
       <p className={`text-lg md:text-xl font-bold  ${style.innerContentInterval}`}>4.445 ETH</p>
       <div className={`${style.innerContentInterval} pb-0`}>
-        <button
-          type="button"
-          className={`px-4 py-2 border border-gray-600 text-gray-600 font-bold text-xs md:text-sm ${style.roundContent}hover:bg-aid-blue transition duration-300`}>
-          {t('wallet.wallet_disconnect')}
-        </button>
+        <WalletDisconnect />
       </div>
     </div>
   )
