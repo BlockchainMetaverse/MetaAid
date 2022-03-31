@@ -5,14 +5,14 @@ import {
   InfoType,
   PlatformCodeEnum,
   PlatformEnum,
-  WalletType,
+  WalletClassType,
 } from '../lib/type'
 
 export const data = {
   addressUk: '0x165CD37b4C644C2921454429E7F9358d18A45e14',
 }
 
-export const walletList: WalletType[] = [
+export const walletList: WalletClassType[] = [
   {
     id: 1,
     type: 'META_MASK',

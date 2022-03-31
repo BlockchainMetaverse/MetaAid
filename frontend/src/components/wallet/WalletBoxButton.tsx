@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { Wallet, WalletType } from './../../lib/type'
+import { WalletClassType, WalletType } from './../../lib/type'
 
 interface WalletBoxButtonProps {
-  wallet: WalletType
-  connectWallet: (type: keyof typeof Wallet) => void
+  wallet: WalletClassType
+  connectWallet: (type: WalletType) => void
 }
 
 const WalletBoxButton: FC<WalletBoxButtonProps> = ({ wallet, connectWallet }) => {

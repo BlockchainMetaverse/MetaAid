@@ -11,10 +11,18 @@ export const enum Wallet {
   WALLET_CONNECT = 'WALLET_CONNECT',
 }
 
-export interface WalletType {
+export type WalletType = keyof typeof Wallet // META_MASK | WALLET_CONNECT
+
+export interface WalletClassType {
   id: number
-  type: keyof typeof Wallet // META_MASK | WALLET_CONNECT
+  type: WalletType
   title: string
+}
+
+export interface AccountInfoType {
+  account: string
+  active: boolean
+  balance: number | null
 }
 
 export const enum CardStateType {
