@@ -71,14 +71,16 @@ const WalletBox: FC = () => {
   }, [account, balance, setAccountInfo, goBack])
 
   useEffect(() => {
+    // 이미 연결 되어있을 경우 mount후 한번만 실행
+    accountInfo.active && goBack()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [goBack])
+
+  useEffect(() => {
     if (!errorMessage) return
     alert(errorMessage)
     setErrorMessage('')
   }, [errorMessage])
-
-  useEffect(() => {
-    // todo: 값 있을경우 페이지 이동시키기
-  }, [accountInfo])
 
   return (
     <div className="mx-auto md:max-w-md">
