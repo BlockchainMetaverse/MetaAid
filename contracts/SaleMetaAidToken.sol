@@ -67,4 +67,12 @@ contract SaleMetaAidToken is Ownable {
 
         return (tokenIds, tokenAmounts);
     }
+
+    function getMetaAidTokenData(uint _tokenId) public view returns (string memory, uint, uint) {
+        string memory tokenUri = mintMetaAidToken.uri(_tokenId);
+        uint tokenPrice = tokenPrices[_tokenId];
+        uint remainToken = remainTokens[_tokenId];
+
+        return (tokenUri, tokenPrice, remainToken);
+    }
 }
