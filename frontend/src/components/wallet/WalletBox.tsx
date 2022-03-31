@@ -16,8 +16,6 @@ const WalletBox: FC = () => {
 
   const [accountInfo, setAccountInfo] = useRecoilState<AccountInfoType>(accountInfoState)
 
-  const CONNECTACCONT = 'CONNECTACCONT'
-
   const connectWallet = (type: WalletType): void => {
     type === Wallet.META_MASK ? metaMaskConnect() : walletConnect()
   }
@@ -25,10 +23,6 @@ const WalletBox: FC = () => {
   const walletConnect = async (): Promise<void> => {
     // todo..
   }
-
-  const goDonation = useCallback((): void => {
-    navigate('/donation')
-  }, [navigate])
 
   const metaMaskConnect = async (): Promise<void> => {
     try {
@@ -61,8 +55,11 @@ const WalletBox: FC = () => {
     setBalance(formatBalace)
   }
 
+  const goBack = useCallback((): void => {
+    navigate(-1)
+  }, [navigate])
+
   useEffect(() => {
-    // localStorage.setItem('walletAccount', stringify(accountData))
     if (!account || balance === null) return
     const accountData = {
       account,
@@ -70,16 +67,13 @@ const WalletBox: FC = () => {
       balance,
     }
     setAccountInfo(accountData)
-    goDonation()
-  }, [account, balance, setAccountInfo, goDonation])
+    goBack()
+  }, [account, balance, setAccountInfo, goBack])
 
   useEffect(() => {
-    if (!localStorage.getItem(CONNECTACCONT)) return
-    // goDonation()
-  }, [])
-
-  useEffect(() => {
-    errorMessage && console.error(errorMessage)
+    if (!errorMessage) return
+    alert(errorMessage)
+    setErrorMessage('')
   }, [errorMessage])
 
   useEffect(() => {
