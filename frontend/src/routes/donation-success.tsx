@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import CardNFT from '../components/CardNFT'
+import CardNFTItem from '../components/CardNFTItem'
 import { FireCracker } from '../components/FireCracker'
 import Share from '../components/Share'
 import SuccessCard from '../components/SuccessCard'
@@ -20,11 +20,11 @@ const DonationSuccess: FC = () => {
         data-aos="fade-up"
         data-aos-delay="200"
         className={`${style.contentInterval} pb-0 md:pb-0 max-w-2xl mx-auto`}>
-        <CardNFT
+        {/* <CardNFTItem
           type={CardStateType.view}
           dataFormat={'image'}
           dataSource={'./images/temp/1.png'}
-        />
+        /> */}
         <p className="title tracking-tight font-black text-sm md:text-base py-2 text-center text-white md:py-4">
           Your NFT #1234
         </p>

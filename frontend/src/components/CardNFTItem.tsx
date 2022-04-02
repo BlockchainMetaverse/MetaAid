@@ -1,45 +1,50 @@
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { CardStateType } from '../lib/type'
+import { CardStateType, ITokenItem } from '../lib/type'
+import { FaDove } from 'react-icons/fa'
 
-interface CardNFT {
+interface CardNFTItem {
   type: CardStateType
   dataFormat: string
-  dataSource: string
+  token: ITokenItem
 }
 
-const CardNFT: FC<CardNFT> = ({ type, dataFormat, dataSource }) => {
+const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
+  const {
+    remainTokens,
+    price,
+    detail: { name, description, image },
+  } = token
   const { t } = useTranslation()
   const ethereumBg = { backgroundImage: 'url(/images/ethereum.svg)' }
   return (
     <div className={`p-1 md:p-2 w-1/2 ${type === CardStateType.view ? 'mx-auto' : ''}`}>
       <div className="block bg-gray-800 rounded-lg overflow-hidden shadow-2xl transform hover:-translate-y-2 transition duration-300">
-        <div className="w-full pb-full h-0">
+        <div className="w-full pb-full h-0 relative text-2xl text-white">
           {dataFormat === 'image' ? (
             // <img src="./images/temp/1.png" alt="NFT" />
-            <img src={dataSource} alt="NFT" />
+            <img src={image} alt="NFT" />
           ) : (
-            <>
-              <div className="relative z-30 p-5 text-2xl text-white bg-purple-300 bg-opacity-50 rounded-xl"></div>
-              <video
-                autoPlay
-                loop
-                muted
-                className="absolute z-10 w-auto min-w-full min-h-full max-w-none">
-                <source src={dataSource} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </>
+            <video autoPlay loop muted controls className="w-full min-w-full min-h-full max-w-none">
+              <source src={image} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           )}
         </div>
         <div className="p-2 text-xs">
-          <p className="text-gray-400 py-1">AAA Collection</p>
+          <p className="text-gray-400 py-1">{description}</p>
           <div className="flex items-center">
-            <span className="block py-1 text-white font-bold">#1234</span>
+            <span className="block py-1 text-white font-bold">{name}</span>
             <div className="flex items-center ml-auto py-1">
               <i className="w-4 h-4 bg-no-repeat bg-left-top bg-contain" style={ethereumBg} />
-              <span className="block text-white font-bold">0.5</span>
+              <span className="block text-white font-bold">{price}</span>
             </div>
+          </div>
+          <div className="flex items-center justify-end py-1 -mx-1">
+            <div className="text-gray-400 px-1">
+              <FaDove />
+            </div>
+            <span className="block text-gray-400 px-1">{remainTokens} left</span>
           </div>
           {type === CardStateType.sales && (
             <div className="mt-4 pb-1">
@@ -56,4 +61,4 @@ const CardNFT: FC<CardNFT> = ({ type, dataFormat, dataSource }) => {
   )
 }
 
-export default CardNFT
+export default CardNFTItem

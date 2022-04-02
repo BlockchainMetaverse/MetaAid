@@ -1,14 +1,15 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, Suspense, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import Account from '../components/Account'
-import CardNFT from '../components/CardNFT'
+import CardNFTList from '../components/CardNFTList'
+import CardLoading from '../components/indicator/CardLoading'
 import TextBox from '../components/TextBox'
-import { data } from '../data/response'
+import { data, tokenIds } from '../data/response'
 import { style } from '../data/style'
 import { CardStateType } from '../lib/type'
-import { accountInfoState } from '../state/atom'
+import { accountInfoState } from '../state/walletState'
 
 const Donation: FC = () => {
   const { t } = useTranslation()
@@ -37,18 +38,16 @@ const Donation: FC = () => {
           color={'white'}
         />
       </div>
-      <div data-aos="zoom-in" data-aos-delay="300" className={`${style.contentInterval}`}>
-        <div className="flex flex-wrap -mx-1">
-          <CardNFT
-            type={CardStateType.sales}
-            dataFormat={'image'}
-            dataSource={'./images/temp/1.png'}
-          />
-          <CardNFT
-            type={CardStateType.sales}
-            dataFormat={'image'}
-            dataSource={'./images/temp/1.png'}
-          />
+      <div className={`${style.contentInterval}`}>
+        <div className="flex flex-wrap -mx-1 w-full">
+          <Suspense
+            fallback={tokenIds.map((id) => (
+              <div className="w-1/2" key={id}>
+                <CardLoading />
+              </div>
+            ))}>
+            <CardNFTList type={CardStateType.sales} dataFormat={'video'} />
+          </Suspense>
         </div>
       </div>
     </div>
