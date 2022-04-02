@@ -50,6 +50,13 @@ module.exports = {
         ],
         quotes: ['error', 'single'],
         'no-empty': ['error', { allowEmptyCatch: true }],
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': [
+          'warn',
+          {
+            additionalHooks: 'useRecoilCallback',
+          },
+        ],
       },
     },
   ],
