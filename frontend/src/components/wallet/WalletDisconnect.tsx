@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { style } from '../../data/style'
 import { useSetRecoilState } from 'recoil'
-import { accountInfoState } from '../../state/atom'
+import { accountInfoState } from '../../state/walletState'
 import { initialAccountInfo } from '../../state/initialState'
 
 const WalletDisconnect: FC = () => {
