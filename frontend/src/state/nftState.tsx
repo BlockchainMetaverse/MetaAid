@@ -21,12 +21,13 @@ export const NftListState = selector<ITokenItem[]>({
   get: async ({ get }): Promise<ITokenItem[]> => {
     try {
       const idList = get(TokenIdListState)
-      const tokenReq = idList.map(async (id) => await saleContract.methods.getMetaAidTokenData(id).call())
+      const tokenReq = idList.map(
+        async (id) => await saleContract.methods.getMetaAidTokenData(id).call(),
+      )
       const tokenRes = await Promise.all(tokenReq)
       const nftListReq = tokenRes.map(async (item, index) => {
         const uriResponse = await fetch(`${item[0]}`, header)
         const uriResult: IUriData = await uriResponse.json()
-        console.log('price', item[1])
         const results: ITokenItem = {
           id: idList[index],
           uri: item[0],
@@ -59,10 +60,11 @@ export const nftPurchaseState = selectorFamily<string, string>({
     async ({ get }) => {
       const { tokenId, price } = get(nftPurchaseReqState)
       if (!tokenId) return ''
-      console.log('nftPurchaseReqState', tokenId, price)
-      console.log('web3.utils.toWei(String(price))', web3.utils.toWei(String(price)))
+      // console.log('nftPurchaseReqState', tokenId, price)
       try {
-        const response = await saleContract.methods.purchaseMetaAidToken(tokenId).send({ from: account, value: web3.utils.toWei(String(price)) })
+        const response = await saleContract.methods
+          .purchaseMetaAidToken(tokenId)
+          .send({ from: account, value: web3.utils.toWei(String(price)) })
         console.log('response', response)
         return response.status
       } catch (error) {
