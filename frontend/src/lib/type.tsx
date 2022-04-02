@@ -110,3 +110,8 @@ export interface IUriData {
   description: string
   image: string
 }
+
+export interface IPurchase {
+  tokenId: number
+  price: number
+}
