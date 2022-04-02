@@ -96,3 +96,5 @@ export const warSubImages: ImageInfoType[] = [
     fileFormat: FileFormatEnum.PNG,
   },
 ]
+
+export const tokenIds = [1, 2, 3]

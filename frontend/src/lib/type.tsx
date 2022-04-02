@@ -96,3 +96,17 @@ export type ErrorType = {
   message: string
   link?: string
 }
+
+export interface ITokenItem {
+  id: number
+  uri: string
+  detail: IUriData
+  price: number
+  remainTokens: number
+}
+
+export interface IUriData {
+  name: string
+  description: string
+  image: string
+}
