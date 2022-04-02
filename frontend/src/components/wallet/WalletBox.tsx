@@ -7,7 +7,7 @@ import { walletList } from '../../data/response'
 import { AccountInfoType, ErrorType, Wallet, WalletType } from '../../lib/type'
 import { accountInfoState } from '../../state/atom'
 import WalletBoxButton from './WalletBoxButton'
-import Toast from './../indicate/Toast'
+import Toast from '../indicator/Toast'
 
 const WalletBox: FC = () => {
   const navigate = useNavigate()

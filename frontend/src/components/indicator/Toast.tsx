@@ -35,7 +35,6 @@ const Toast: FC<ErrorProps> = ({ error, onClose }) => {
   }
 
   useEffect(() => {
-    console.log('처음!!')
     setTransition(() => TransitionLeft)
   }, [TransitionLeft])
   return (
