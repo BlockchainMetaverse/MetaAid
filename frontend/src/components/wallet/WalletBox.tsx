@@ -4,15 +4,23 @@ import React, { FC, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { walletList } from '../../data/response'
-import { AccountInfoType, Wallet, WalletType } from '../../lib/type'
+import { AccountInfoType, ErrorType, Wallet, WalletType } from '../../lib/type'
 import { accountInfoState } from '../../state/atom'
 import WalletBoxButton from './WalletBoxButton'
+import Toast from './../indicate/Toast'
 
 const WalletBox: FC = () => {
   const navigate = useNavigate()
   const [account, setAccount] = useState('')
   const [balance, setBalance] = useState<number | null>(null)
-  const [errorMessage, setErrorMessage] = useState('')
+
+  const initialError: ErrorType = {
+    isOpen: false,
+    severity: 'error',
+    message: '',
+    link: '',
+  }
+  const [error, setError] = useState<ErrorType>(initialError)
 
   const [accountInfo, setAccountInfo] = useRecoilState<AccountInfoType>(accountInfoState)
 
@@ -28,7 +36,12 @@ const WalletBox: FC = () => {
     try {
       if (!window.ethereum) {
         // metamask 프로그램 설치 안 되어 있는 경우
-        setErrorMessage('Install MetaMask!')
+        setError((error) => ({
+          ...error,
+          isOpen: true,
+          message: 'Install Metamask!',
+          link: 'https://metamask.io/',
+        }))
         return
       }
       // 연결될때까지 await함
@@ -76,20 +89,17 @@ const WalletBox: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goBack])
 
-  useEffect(() => {
-    if (!errorMessage) return
-    alert(errorMessage)
-    setErrorMessage('')
-  }, [errorMessage])
-
   return (
-    <div className="mx-auto md:max-w-md">
-      <div className="rounded-lg overflow-hidden">
-        {walletList.map((wallet) => (
-          <WalletBoxButton key={wallet.id} wallet={wallet} connectWallet={connectWallet} />
-        ))}
+    <>
+      {error.isOpen && <Toast error={error} onClose={() => setError(initialError)} />}
+      <div className="mx-auto md:max-w-md">
+        <div className="rounded-lg overflow-hidden">
+          {walletList.map((wallet) => (
+            <WalletBoxButton key={wallet.id} wallet={wallet} connectWallet={connectWallet} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

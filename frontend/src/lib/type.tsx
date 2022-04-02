@@ -80,3 +80,19 @@ export interface ImageInfoType {
   fileName: string
   fileFormat: FileFormatEnum
 }
+
+const toastSeverity = {
+  error: 'error',
+  warning: 'warning',
+  info: 'info',
+  success: 'success',
+} as const
+
+export type ToastSeverityType = typeof toastSeverity[keyof typeof toastSeverity] // "error" | "warning" | "info" | "success"
+
+export type ErrorType = {
+  isOpen: boolean
+  severity: ToastSeverityType
+  message: string
+  link?: string
+}
