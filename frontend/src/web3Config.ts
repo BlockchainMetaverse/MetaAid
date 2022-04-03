@@ -290,6 +290,7 @@ const mintContractAddress = '0xA216A35660cd75CA835A3BF98D1C8F8F038b9638'
 const saleContractAddress = '0x06a77FFCb248b2158A4a1039889418e2CcBa6129'
 
 export const web3 = new Web3(window.ethereum)
+// export const web3 = new Web3(window.ethereum || 'https://rpc-mumbai.maticvigil.com/')
 
 export const mintContract = new web3.eth.Contract(mintABI, mintContractAddress)
 export const saleContract = new web3.eth.Contract(saleABI, saleContractAddress)
