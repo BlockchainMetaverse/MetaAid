@@ -7,7 +7,6 @@ import CardLoading from '../components/indicator/CardLoading'
 import Share from '../components/Share'
 import SuccessCard from '../components/SuccessCard'
 import { style } from '../data/style'
-import { CardStateType } from '../lib/type'
 import Button from './../components/Button'
 
 const DonationSuccess: FC = () => {
@@ -35,7 +34,7 @@ const DonationSuccess: FC = () => {
                 <CardLoading />
               </div>
             }>
-            <CardNFTList type={CardStateType.success} dataFormat={'video'} />
+            <CardNFTList type={'success'} dataFormat={'video'} />
           </Suspense>
         </div>
       </div>

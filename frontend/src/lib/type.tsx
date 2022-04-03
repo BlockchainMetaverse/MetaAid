@@ -25,10 +25,12 @@ export interface AccountInfoType {
   balance: number | null
 }
 
-export const enum CardStateType {
-  sales,
-  success,
-}
+export const cardState = {
+  SALES: 'sales',
+  SUCCESS: 'success',
+} as const
+
+export type CardStateType = typeof cardState[keyof typeof cardState] // "sales" | "success"
 
 const cardPath = {
   DONATION: 'donation',

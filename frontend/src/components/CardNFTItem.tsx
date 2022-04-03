@@ -22,7 +22,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, handleDonation 
 
   // view
   return (
-    <div className={`p-1 md:p-2 w-1/2 ${type === CardStateType.success ? 'mx-auto' : ''}`}>
+    <div className={`p-1 md:p-2 w-1/2 ${type === 'success' ? 'mx-auto' : ''}`}>
       <div className="block bg-gray-800 rounded-lg overflow-hidden shadow-2xl transform hover:-translate-y-2 transition duration-300">
         <div className="w-full pb-full h-0 relative text-2xl text-white">
           {dataFormat === 'image' ? (
@@ -50,7 +50,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, handleDonation 
             </div>
             <span className="block text-gray-400 px-1">{remainTokens} left</span>
           </div>
-          {type === CardStateType.sales && (
+          {type === 'sales' && (
             <div className="mt-4 pb-1">
               <button
                 type="button"

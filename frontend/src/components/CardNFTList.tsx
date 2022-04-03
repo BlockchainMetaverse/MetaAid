@@ -51,7 +51,7 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
   }, [navigate])
 
   useEffect(() => {
-    if (type === CardStateType.sales) {
+    if (type === 'sales') {
       // donation 페이지 일경우 NftList 강제 refresh
       setTokenIdList(tokenIds)
       refreshNftList()
@@ -70,7 +70,7 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
   }, [goDonationSuccess, nftItem, reqState])
   return (
     <>
-      {type === CardStateType.success && nftItem ? (
+      {type === 'success' && nftItem ? (
         <CardNFTItem
           type={type}
           dataFormat={dataFormat}

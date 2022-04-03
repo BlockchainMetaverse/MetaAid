@@ -8,7 +8,6 @@ import CardLoading from '../components/indicator/CardLoading'
 import TextBox from '../components/TextBox'
 import { data, tokenIds } from '../data/response'
 import { style } from '../data/style'
-import { CardStateType } from '../lib/type'
 import { accountInfoState } from '../state/walletState'
 
 const Donation: FC = () => {
@@ -46,7 +45,7 @@ const Donation: FC = () => {
                 <CardLoading />
               </div>
             ))}>
-            <CardNFTList type={CardStateType.sales} dataFormat={'video'} />
+            <CardNFTList type={'sales'} dataFormat={'video'} />
           </Suspense>
         </div>
       </div>
