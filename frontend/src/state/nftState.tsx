@@ -1,11 +1,10 @@
 import { atom, selector, selectorFamily } from 'recoil'
-import { tokenIds } from '../data/response'
 import { IPurchase, ITokenItem, IUriData } from '../lib/type'
 import { header } from '../lib/utils'
 import { saleContract, web3 } from '../web3Config'
 import { initialPurchase } from './initialState'
 
-const TokenIdListState = atom<number[]>({
+export const TokenIdListState = atom<number[] | []>({
   key: 'TokenIdListState',
   default: [],
 })
@@ -16,22 +15,25 @@ const TokenIdListState = atom<number[]>({
 //   return result
 // }
 
+/* eslint-disable indent */
 export const NftListState = selector<ITokenItem[]>({
   key: 'NftListState',
   get: async ({ get }): Promise<ITokenItem[]> => {
+    const tokenIds = get(TokenIdListState)
+    if (!tokenIds.length) return []
     try {
-      const idList = get(TokenIdListState)
+      const idList = tokenIds
       const tokenReq = idList.map(
         async (id) => await saleContract.methods.getMetaAidTokenData(id).call(),
       )
       const tokenRes = await Promise.all(tokenReq)
       const nftListReq = tokenRes.map(async (item, index) => {
-        const uriResponse = await fetch(`${item[0]}`, header)
-        const uriResult: IUriData = await uriResponse.json()
+        const uriReq = await fetch(`${item[0]}`, header)
+        const uriRes: IUriData = await uriReq.json()
         const results: ITokenItem = {
           id: idList[index],
           uri: item[0],
-          detail: uriResult,
+          detail: uriRes,
           price: Number(web3.utils.fromWei(item[1])),
           remainTokens: Number(item[2]),
         }
@@ -44,7 +46,36 @@ export const NftListState = selector<ITokenItem[]>({
     }
     return []
   },
-  set: ({ set }) => set(TokenIdListState, tokenIds),
+  // set: ({ set }, newVale: number[]) => set(TokenIdListState, newVale),
+})
+
+export const NftItemReqTokenIdState = atom<number>({
+  key: 'NftItemReqTokenIdState',
+  default: 0,
+})
+
+export const NftItemState = selector<ITokenItem | null>({
+  key: 'NftItemState',
+  get: async ({ get }): Promise<ITokenItem | null> => {
+    const tokenId = get(NftItemReqTokenIdState)
+    if (!tokenId) return null
+    try {
+      const tokenData = await saleContract.methods.getMetaAidTokenData(tokenId).call()
+      const uriRes = await fetch(`${tokenData[0]}`, header)
+      const uriReq: IUriData = await uriRes.json()
+      const results: ITokenItem = {
+        id: tokenId,
+        uri: tokenData[0],
+        detail: uriReq,
+        price: Number(web3.utils.fromWei(tokenData[1])),
+        remainTokens: Number(tokenData[2]),
+      }
+      return results
+    } catch (error) {
+      console.error(error)
+    }
+    return null
+  },
 })
 
 export const nftPurchaseReqState = atom<IPurchase>({
@@ -53,22 +84,21 @@ export const nftPurchaseReqState = atom<IPurchase>({
 })
 
 /* eslint-disable indent */
-export const nftPurchaseState = selectorFamily<string, string>({
+export const nftPurchaseState = selectorFamily<IPurchase | null, string>({
   key: 'nftPurchaseState',
   get:
     (account: string) =>
     async ({ get }) => {
       const { tokenId, price } = get(nftPurchaseReqState)
-      if (!tokenId) return ''
-      // console.log('nftPurchaseReqState', tokenId, price)
+      if (!tokenId) return null
       try {
         const response = await saleContract.methods
           .purchaseMetaAidToken(tokenId)
           .send({ from: account, value: web3.utils.toWei(String(price)) })
-        console.log('response', response)
-        return response.status
+        return response.status ? { tokenId, price } : null
       } catch (error) {
         console.error(error)
       }
+      return null
     },
 })

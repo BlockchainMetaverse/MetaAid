@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import CardNFTItem from '../components/CardNFTItem'
+import CardNFTList from '../components/CardNFTList'
 import { FireCracker } from '../components/FireCracker'
+import CardLoading from '../components/indicator/CardLoading'
 import Share from '../components/Share'
 import SuccessCard from '../components/SuccessCard'
 import { style } from '../data/style'
@@ -16,18 +17,17 @@ const DonationSuccess: FC = () => {
       <div data-aos="fade-up" className={`max-w-2xl mx-auto ${style.contentInterval}`}>
         <SuccessCard />
       </div>
-      <div
-        data-aos="fade-up"
-        data-aos-delay="200"
-        className={`${style.contentInterval} pb-0 md:pb-0 max-w-2xl mx-auto`}>
-        {/* <CardNFTItem
-          type={CardStateType.view}
-          dataFormat={'image'}
-          dataSource={'./images/temp/1.png'}
-        /> */}
-        <p className="title tracking-tight font-black text-sm md:text-base py-2 text-center text-white md:py-4">
-          Your NFT #1234
-        </p>
+      <div className={`${style.contentInterval} pb-0 md:pb-0 max-w-2xl mx-auto`}>
+        <div className="flex flex-wrap -mx-1 w-full justify-center">
+          <Suspense
+            fallback={
+              <div className="w-1/2">
+                <CardLoading />
+              </div>
+            }>
+            <CardNFTList type={CardStateType.success} dataFormat={'video'} />
+          </Suspense>
+        </div>
       </div>
       <div
         data-aos="fade-up"
@@ -35,12 +35,6 @@ const DonationSuccess: FC = () => {
         className={`${style.contentInterval} text-center`}>
         <Share title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
       </div>
-      {/* <div className={`${style.contentInterval} pt-0 md:pt-0 max-w-2xl mx-auto`}>
-        <CardNFT type={CardStateType.view} />
-        <p className="title tracking-tight font-black text-xl md:text-base py-1 text-center text-white md:py-2">
-          Your NFT #1234
-        </p>
-      </div> */}
       <div
         data-aos="zoom-in"
         data-aos-delay="400"
