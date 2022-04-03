@@ -30,7 +30,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, selectedItem })
             // <img src="./images/temp/1.png" alt="NFT" />
             <img src={image} alt="NFT" />
           ) : (
-            <video autoPlay loop muted controls className="w-full min-w-full min-h-full max-w-none">
+            <video autoPlay loop muted controls className="w-full min-w-full max-w-none">
               <source src={image} type="video/mp4" />
               Your browser does not support the video tag.
             </video>

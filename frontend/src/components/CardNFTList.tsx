@@ -21,7 +21,6 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
 
   // success 위한 state
   const accountInfo = useRecoilValue(accountInfoState)
-  // const setNftPurchaseReq = useSetRecoilState<IPurchase>(nftPurchaseReqState)
   const nftPurchasedItem = useRecoilValue<IPurchase | null>(
     NftPurchasedStateSelector(accountInfo.account),
   )
