@@ -1,22 +1,23 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 import { CardStateType, ITokenItem } from '../lib/type'
 import { FaDove } from 'react-icons/fa'
+import CardNFTButton from './CardNFTButton'
 
 interface CardNFTItem {
   type: CardStateType
   dataFormat: string
   token: ITokenItem
-  handleDonation: (id: number, price: number) => void
+  selectedItem: () => void
 }
 
-const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, handleDonation }) => {
+const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, selectedItem }) => {
   const {
-    id,
     remainTokens,
     price,
     detail: { name, description, image },
   } = token
+
   const { t } = useTranslation()
   const ethereumBg = { backgroundImage: 'url(/images/ethereum.svg)' }
 
@@ -51,14 +52,24 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, handleDonation 
             <span className="block text-gray-400 px-1">{remainTokens} left</span>
           </div>
           {type === 'sales' && (
-            <div className="mt-4 pb-1">
-              <button
-                type="button"
-                className="w-full flex items-center justify-center p-2 rounded-lg text-white text-sm font-extrabold bg-aid-purple hover:bg-aid-blue hover:text-gray-800 md:py-4 md:px-10 transition-all duration-300"
-                onClick={() => handleDonation(id, price)}>
-                {t('donation')}
-              </button>
-            </div>
+            // <Suspense
+            // fallback={
+            //   <CardNFTButton
+            //     token={token}
+            //     disabled={true}
+            //     isLoading={true}
+            //     message={token.remainTokens ? t('donation') : t('soldout')}
+            //   />
+            // }>
+            <Suspense fallback={<div>Loading</div>}>
+              <CardNFTButton
+                token={token}
+                disabled={!token.remainTokens}
+                isLoading={false}
+                message={token.remainTokens ? t('donation') : t('soldout')}
+                selectedItem={selectedItem}
+              />
+            </Suspense>
           )}
         </div>
       </div>

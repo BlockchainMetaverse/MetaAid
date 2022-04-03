@@ -2,13 +2,10 @@ import React, { FC, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from 'recoil'
 import { tokenIds } from '../data/response'
-import { CardStateType, IPurchase, ITokenItem } from '../lib/type'
+import { CardStateType, IPurchase } from '../lib/type'
 import {
-  NftItemReqTokenIdState,
-  NftItemState,
-  NftListState,
-  nftPurchaseReqState,
-  nftPurchaseState,
+  NftListStateSelector,
+  NftPurchasedStateSelector,
   TokenIdListState,
 } from '../state/nftState'
 import { accountInfoState } from '../state/walletState'
@@ -24,31 +21,25 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
 
   // success 위한 state
   const accountInfo = useRecoilValue(accountInfoState)
-  const setNftPurchaseReq = useSetRecoilState(nftPurchaseReqState)
-  const setNftItemReqTokenId = useSetRecoilState(NftItemReqTokenIdState)
-  const nftPurchasedItem = useRecoilValue<IPurchase | null>(nftPurchaseState(accountInfo.account))
-
-  const nftItem = useRecoilValue<ITokenItem | null>(NftItemState)
+  // const setNftPurchaseReq = useSetRecoilState<IPurchase>(nftPurchaseReqState)
+  const nftPurchasedItem = useRecoilValue<IPurchase | null>(
+    NftPurchasedStateSelector(accountInfo.account),
+  )
 
   const [reqState, setReqState] = useState(false)
 
   // 모든 토큰 get을 위한 state
   const setTokenIdList = useSetRecoilState(TokenIdListState)
-  const nftList = useRecoilValue(NftListState)
-  const refreshNftList = useRecoilRefresher_UNSTABLE(NftListState)
-
-  const handleDonation = (tokenId: number, price: number): void => {
-    const req: IPurchase = {
-      tokenId,
-      price,
-    }
-    setReqState(true) // 비동기로 기다리고 있기떄문에 지갑에서 수락, 거부후에 값 수정됨
-    setNftPurchaseReq(req)
-  }
+  const nftList = useRecoilValue(NftListStateSelector)
+  const refreshNftList = useRecoilRefresher_UNSTABLE(NftListStateSelector)
 
   const goDonationSuccess = useCallback((): void => {
     navigate('/donation-success')
   }, [navigate])
+
+  const handleDonation = (): void => {
+    setReqState(true)
+  }
 
   useEffect(() => {
     if (type === 'sales') {
@@ -57,37 +48,29 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
       refreshNftList()
       return
     }
-    // Todo: success 페이지 일경우 nftList reset
-  }, [type, setTokenIdList, refreshNftList, setNftItemReqTokenId])
+  }, [type, setTokenIdList, refreshNftList])
 
   useEffect(() => {
     if (!nftPurchasedItem) return
-    setNftItemReqTokenId(nftPurchasedItem.tokenId)
-  }, [nftPurchasedItem, setNftItemReqTokenId])
+    type === 'success' && setTokenIdList([nftPurchasedItem.tokenId])
+  }, [nftPurchasedItem, type, setTokenIdList])
 
   useEffect(() => {
-    reqState && nftItem && goDonationSuccess()
-  }, [goDonationSuccess, nftItem, reqState])
+    reqState && nftPurchasedItem && goDonationSuccess()
+  }, [nftPurchasedItem, reqState, goDonationSuccess])
+
+  // view
   return (
     <>
-      {type === 'success' && nftItem ? (
+      {nftList.map((nft) => (
         <CardNFTItem
+          key={nft.id}
           type={type}
           dataFormat={dataFormat}
-          token={nftItem}
-          handleDonation={handleDonation}
+          token={nft}
+          selectedItem={handleDonation}
         />
-      ) : (
-        nftList.map((nft) => (
-          <CardNFTItem
-            key={nft.id}
-            type={type}
-            dataFormat={dataFormat}
-            token={nft}
-            handleDonation={handleDonation}
-          />
-        ))
-      )}
+      ))}
     </>
   )
 }

@@ -16,8 +16,8 @@ export const TokenIdListState = atom<number[]>({
 // }
 
 /* eslint-disable indent */
-export const NftListState = selector<ITokenItem[]>({
-  key: 'NftListState',
+export const NftListStateSelector = selector<ITokenItem[]>({
+  key: 'NftListStateSelector',
   get: async ({ get }): Promise<ITokenItem[]> => {
     const tokenIds = get(TokenIdListState)
     if (!tokenIds.length) return []
@@ -49,34 +49,34 @@ export const NftListState = selector<ITokenItem[]>({
   // set: ({ set }, newVale: number[]) => set(TokenIdListState, newVale),
 })
 
-export const NftItemReqTokenIdState = atom<number>({
-  key: 'NftItemReqTokenIdState',
-  default: 0,
-})
+// export const NftItemReqTokenIdState = atom<number>({
+//   key: 'NftItemReqTokenIdState',
+//   default: 0,
+// })
 
-export const NftItemState = selector<ITokenItem | null>({
-  key: 'NftItemState',
-  get: async ({ get }): Promise<ITokenItem | null> => {
-    const tokenId = get(NftItemReqTokenIdState)
-    if (!tokenId) return null
-    try {
-      const tokenData = await saleContract.methods.getMetaAidTokenData(tokenId).call()
-      const uriRes = await fetch(`${tokenData[0]}`, header)
-      const uriReq: IUriData = await uriRes.json()
-      const results: ITokenItem = {
-        id: tokenId,
-        uri: tokenData[0],
-        detail: uriReq,
-        price: Number(web3.utils.fromWei(tokenData[1])),
-        remainTokens: Number(tokenData[2]),
-      }
-      return results
-    } catch (error) {
-      console.error(error)
-    }
-    return null
-  },
-})
+// export const NftItemState = selector<ITokenItem | null>({
+//   key: 'NftItemState',
+//   get: async ({ get }): Promise<ITokenItem | null> => {
+//     const tokenId = get(NftItemReqTokenIdState)
+//     if (!tokenId) return null
+//     try {
+//       const tokenData = await saleContract.methods.getMetaAidTokenData(tokenId).call()
+//       const uriRes = await fetch(`${tokenData[0]}`, header)
+//       const uriReq: IUriData = await uriRes.json()
+//       const results: ITokenItem = {
+//         id: tokenId,
+//         uri: tokenData[0],
+//         detail: uriReq,
+//         price: Number(web3.utils.fromWei(tokenData[1])),
+//         remainTokens: Number(tokenData[2]),
+//       }
+//       return results
+//     } catch (error) {
+//       console.error(error)
+//     }
+//     return null
+//   },
+// })
 
 export const nftPurchaseReqState = atom<IPurchase>({
   key: 'nftPurchaseReqState',
@@ -84,8 +84,8 @@ export const nftPurchaseReqState = atom<IPurchase>({
 })
 
 /* eslint-disable indent */
-export const nftPurchaseState = selectorFamily<IPurchase | null, string>({
-  key: 'nftPurchaseState',
+export const NftPurchasedStateSelector = selectorFamily<IPurchase | null, string>({
+  key: 'NftPurchasedStateSelector',
   get:
     (account: string) =>
     async ({ get }) => {

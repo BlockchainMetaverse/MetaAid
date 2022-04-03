@@ -39,6 +39,7 @@ const Donation: FC = () => {
       </div>
       <div className={`${style.contentInterval}`}>
         <div className="flex flex-wrap -mx-1 w-full">
+          {/* <CardNFTList type={'sales'} dataFormat={'video'} /> */}
           <Suspense
             fallback={tokenIds.map((id) => (
               <div className="w-1/2" key={id}>

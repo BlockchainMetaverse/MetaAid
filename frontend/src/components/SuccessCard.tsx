@@ -3,13 +3,15 @@ import { useTranslation } from 'react-i18next'
 import { useRecoilValue } from 'recoil'
 import { style } from '../data/style'
 import { IPurchase } from '../lib/type'
-import { nftPurchaseState } from '../state/nftState'
+import { NftPurchasedStateSelector } from '../state/nftState'
 import { accountInfoState } from '../state/walletState'
 
 const SuccessCard: FC = () => {
   const { t } = useTranslation()
   const accountInfo = useRecoilValue(accountInfoState)
-  const nftPurchasedItem = useRecoilValue<IPurchase | null>(nftPurchaseState(accountInfo.account))
+  const nftPurchasedItem = useRecoilValue<IPurchase | null>(
+    NftPurchasedStateSelector(accountInfo.account),
+  )
 
   return (
     <>
