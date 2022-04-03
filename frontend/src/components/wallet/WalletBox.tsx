@@ -8,18 +8,13 @@ import { AccountInfoType, ErrorType, Wallet, WalletType } from '../../lib/type'
 import { accountInfoState } from '../../state/walletState'
 import WalletBoxButton from './WalletBoxButton'
 import Toast from '../indicator/Toast'
+import { initialError } from '../../state/initialState'
 
 const WalletBox: FC = () => {
   const navigate = useNavigate()
   const [account, setAccount] = useState('')
   const [balance, setBalance] = useState<number | null>(null)
 
-  const initialError: ErrorType = {
-    isOpen: false,
-    severity: 'error',
-    message: '',
-    link: '',
-  }
   const [error, setError] = useState<ErrorType>(initialError)
 
   const [accountInfo, setAccountInfo] = useRecoilState<AccountInfoType>(accountInfoState)
