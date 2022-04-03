@@ -36,7 +36,7 @@ const CardNFTButton: FC<CardNFTButton> = ({
   // view
   return (
     <div className="mt-4 pb-1">
-      <div className="bg-aid-light-blue rounded-md overflow-hidden">
+      <div className="bg-gray-600 rounded-md overflow-hidden">
         <LoadingButton
           onClick={handleDonation}
           fullWidth={true}
@@ -45,6 +45,7 @@ const CardNFTButton: FC<CardNFTButton> = ({
           startIcon={<CurrencyBitcoinIcon />}
           variant="contained"
           size="medium"
+          color="primary"
           disabled={disabled}>
           {message}
         </LoadingButton>
