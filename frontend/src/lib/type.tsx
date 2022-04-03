@@ -27,8 +27,15 @@ export interface AccountInfoType {
 
 export const enum CardStateType {
   sales,
-  view,
+  success,
 }
+
+const cardPath = {
+  DONATION: 'donation',
+  PROFILE: 'profile',
+} as const
+
+export type CardPathType = typeof cardPath[keyof typeof cardPath] // donation | profile
 
 export interface InfoType {
   id: number
@@ -103,6 +110,8 @@ export interface ITokenItem {
   detail: IUriData
   price: number
   remainTokens: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
 }
 
 export interface IUriData {
