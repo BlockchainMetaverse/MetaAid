@@ -4,7 +4,7 @@ import { header } from '../lib/utils'
 import { saleContract, web3 } from '../web3Config'
 import { initialPurchase } from './initialState'
 
-export const TokenIdListState = atom<number[] | []>({
+export const TokenIdListState = atom<number[]>({
   key: 'TokenIdListState',
   default: [],
 })
