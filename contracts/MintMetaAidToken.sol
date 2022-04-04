@@ -11,7 +11,9 @@ contract MintMetaAidToken is ERC1155, Ownable {
 
     mapping(uint => string) metadataURIs;
 
-    uint public totalSupply = 0;
+    uint public totalSupply;
+
+    uint public totalTokenAmount;
 
     constructor(string memory _name, string memory _symbol) ERC1155("") {
         name = _name;
@@ -29,6 +31,8 @@ contract MintMetaAidToken is ERC1155, Ownable {
         totalSupply++;
 
         metadataURIs[totalSupply] = _uri;
+
+        totalTokenAmount += _amount;
 
         _mint(owner(), totalSupply, _amount, "");
     }

@@ -21,6 +21,8 @@ contract SaleMetaAidToken is Ownable {
 
     uint public totalAidPrice;
 
+    uint public saleTokenAmount;
+
     function setForSaleMetaAidToken(uint _tokenId, uint _price) public onlyOwner {
         require(_price > 0, "Price is zero is lower.");
         require(tokenPrices[_tokenId] == 0, "This MetaAidToken is already on sale.");
@@ -46,6 +48,9 @@ contract SaleMetaAidToken is Ownable {
         mintMetaAidToken.safeTransferFrom(owner(), msg.sender, _tokenId, 1, "");
 
         totalAidPrice += msg.value;
+
+        saleTokenAmount += 1;
+
         remainTokens[_tokenId] -= 1;
     }
 
