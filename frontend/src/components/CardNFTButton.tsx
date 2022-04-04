@@ -7,6 +7,7 @@ import { accountInfoState } from '../state/walletState'
 import { useNavigate } from 'react-router-dom'
 import { Button, createTheme, ThemeProvider } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
+import { openSeaUri } from '../data/response'
 
 interface CardNFTButton {
   type: CardStateType
@@ -48,9 +49,17 @@ const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message }) =>
     setReqState(true)
   }
 
+  const goOpensea = (): void => {
+    window.open(`${openSeaUri}/${id}`, '_blank')
+  }
+
   const goDonationSuccess = useCallback((): void => {
     navigate('/donation-success')
   }, [navigate])
+
+  const handleClick = (): void => {
+    type === 'sales' ? handleDonation() : goOpensea()
+  }
 
   useEffect(() => {
     if (!nftPurchasedItem) return
@@ -77,7 +86,7 @@ const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message }) =>
                 backgroundColor: deepPurple['A400'],
               },
             }}
-            onClick={handleDonation}>
+            onClick={handleClick}>
             {message}
           </Button>
         </ThemeProvider>

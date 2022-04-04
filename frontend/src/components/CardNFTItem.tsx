@@ -51,23 +51,27 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
             </div>
             <span className="block text-gray-400 px-1">{remainTokens} left</span>
           </div>
-          {type === 'sales' && (
-            <Suspense
-              fallback={
-                <div className="mt-4 pb-1">
-                  <CardButtonLoading message={token.remainTokens ? t('donation') : t('soldout')} />
-                </div>
-              }>
+          <Suspense
+            fallback={
               <div className="mt-4 pb-1">
-                <CardNFTButton
-                  type={type}
-                  token={token}
-                  disabled={!token.remainTokens}
-                  message={token.remainTokens ? t('donation') : t('soldout')}
-                />
+                <CardButtonLoading message={token.remainTokens ? t('donation') : t('soldout')} />
               </div>
-            </Suspense>
-          )}
+            }>
+            <div className="mt-4 pb-1">
+              <CardNFTButton
+                type={type}
+                token={token}
+                disabled={!token.remainTokens}
+                message={
+                  type === 'sales'
+                    ? token.remainTokens
+                      ? t('donation')
+                      : t('soldout')
+                    : 'go opensea'
+                }
+              />
+            </div>
+          </Suspense>
         </div>
       </div>
     </div>

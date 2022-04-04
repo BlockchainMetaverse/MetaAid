@@ -7,6 +7,7 @@ import {
   PlatformEnum,
   WalletClassType,
 } from '../lib/type'
+import { mintContractAddress } from '../web3Config'
 
 export const data = {
   addressUk: '0x165CD37b4C644C2921454429E7F9358d18A45e14',
@@ -98,3 +99,5 @@ export const warSubImages: ImageInfoType[] = [
 ]
 
 export const tokenIds = [1, 2, 3]
+
+export const openSeaUri = `https://testnets.opensea.io/assets/mumbai/${mintContractAddress}`
