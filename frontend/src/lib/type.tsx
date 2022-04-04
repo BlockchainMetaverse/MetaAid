@@ -120,3 +120,7 @@ export interface IPurchase {
   tokenId: number
   price: number
 }
+
+export interface IByTokenIdPurchased {
+  [key: string]: string
+}

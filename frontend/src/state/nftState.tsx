@@ -1,8 +1,10 @@
-import { atom, selector, selectorFamily } from 'recoil'
-import { IPurchase, ITokenItem, IUriData } from '../lib/type'
+import { atom, selectorFamily } from 'recoil'
+import { tokenIds } from '../data/response'
+import { CardStateType, IPurchase, ITokenItem, IByTokenIdPurchased, IUriData } from '../lib/type'
 import { header } from '../lib/utils'
 import { saleContract, web3 } from '../web3Config'
 import { initialPurchase } from './initialState'
+import { accountInfoState } from './walletState'
 
 export const TokenIdListState = atom<number[]>({
   key: 'TokenIdListState',
@@ -43,13 +45,35 @@ const getTokenList = async (tokenIds: number[]): Promise<ITokenItem[]> => {
   return []
 }
 
+const getUserTokenList = async (account: string): Promise<ITokenItem[]> => {
+  try {
+    const allTokenData: ITokenItem[] = await getTokenList(tokenIds)
+    const tokenReq: [string[], string[]] = await saleContract.methods
+      .getMetaAidTokens(account)
+      .call()
+    const userTokenIds = tokenReq[0]
+    const purchasedTokens = tokenReq[1]
+    const tokenData: IByTokenIdPurchased[] = userTokenIds.map((id, index) => ({
+      [id]: purchasedTokens[index],
+    }))
+    console.log('tokenReq', tokenReq)
+    console.log('allTokenData', allTokenData, 'tokenData', tokenData)
+  } catch (error) {
+    console.error(error)
+  }
+  return []
+}
+
 /* eslint-disable indent */
-export const NftListStateSelector = selector<ITokenItem[]>({
+export const NftListStateSelector = selectorFamily<ITokenItem[], CardStateType>({
   key: 'NftListStateSelector',
-  get: async ({ get }): Promise<ITokenItem[]> => {
-    const tokenIds = get(TokenIdListState)
-    return getTokenList(tokenIds)
-  },
+  get:
+    (type: CardStateType) =>
+    async ({ get }): Promise<ITokenItem[]> => {
+      const tokenIds = get(TokenIdListState)
+      const { account } = get(accountInfoState)
+      return type === 'profile' && account ? getUserTokenList(account) : getTokenList(tokenIds)
+    },
   // set: ({ set }, newVale: number[]) => set(TokenIdListState, newVale),
 })
 
