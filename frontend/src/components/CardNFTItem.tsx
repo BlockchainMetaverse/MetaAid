@@ -67,7 +67,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
                     ? token.remainTokens
                       ? t('donation')
                       : t('soldout')
-                    : 'go opensea'
+                    : t('go_to_opensea')
                 }
               />
             </div>
