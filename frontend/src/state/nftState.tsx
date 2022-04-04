@@ -15,36 +15,40 @@ export const TokenIdListState = atom<number[]>({
 //   return result
 // }
 
+const getTokenList = async (tokenIds: number[]): Promise<ITokenItem[]> => {
+  if (!tokenIds.length) return []
+  try {
+    const idList = tokenIds
+    const tokenReq = idList.map(
+      async (id) => await saleContract.methods.getMetaAidTokenData(id).call(),
+    )
+    const tokenRes = await Promise.all(tokenReq)
+    const nftListReq = tokenRes.map(async (item, index) => {
+      const uriReq = await fetch(`${item[0]}`, header)
+      const uriRes: IUriData = await uriReq.json()
+      const results: ITokenItem = {
+        id: idList[index],
+        uri: item[0],
+        detail: uriRes,
+        price: Number(web3.utils.fromWei(item[1])),
+        remainTokens: Number(item[2]),
+      }
+      return results
+    })
+    const nftListRes: ITokenItem[] = await Promise.all(nftListReq)
+    return nftListRes
+  } catch (error) {
+    console.error(error)
+  }
+  return []
+}
+
 /* eslint-disable indent */
 export const NftListStateSelector = selector<ITokenItem[]>({
   key: 'NftListStateSelector',
   get: async ({ get }): Promise<ITokenItem[]> => {
     const tokenIds = get(TokenIdListState)
-    if (!tokenIds.length) return []
-    try {
-      const idList = tokenIds
-      const tokenReq = idList.map(
-        async (id) => await saleContract.methods.getMetaAidTokenData(id).call(),
-      )
-      const tokenRes = await Promise.all(tokenReq)
-      const nftListReq = tokenRes.map(async (item, index) => {
-        const uriReq = await fetch(`${item[0]}`, header)
-        const uriRes: IUriData = await uriReq.json()
-        const results: ITokenItem = {
-          id: idList[index],
-          uri: item[0],
-          detail: uriRes,
-          price: Number(web3.utils.fromWei(item[1])),
-          remainTokens: Number(item[2]),
-        }
-        return results
-      })
-      const nftListRes: ITokenItem[] = await Promise.all(nftListReq)
-      return nftListRes
-    } catch (error) {
-      console.error(error)
-    }
-    return []
+    return getTokenList(tokenIds)
   },
   // set: ({ set }, newVale: number[]) => set(TokenIdListState, newVale),
 })

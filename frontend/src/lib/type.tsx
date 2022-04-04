@@ -28,16 +28,10 @@ export interface AccountInfoType {
 export const cardState = {
   SALES: 'sales',
   SUCCESS: 'success',
-} as const
-
-export type CardStateType = typeof cardState[keyof typeof cardState] // "sales" | "success"
-
-const cardPath = {
-  DONATION: 'donation',
   PROFILE: 'profile',
 } as const
 
-export type CardPathType = typeof cardPath[keyof typeof cardPath] // donation | profile
+export type CardStateType = typeof cardState[keyof typeof cardState] // "sales" | "success" | "profile"
 
 export interface InfoType {
   id: number
