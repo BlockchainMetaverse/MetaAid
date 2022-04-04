@@ -54,17 +54,17 @@ export const personInfoList: InfoType[] = [
     id: 2,
     nickname: 'h662',
     position: 'Smart Contract',
-    email: 'h662hongsunghyun@gmail.com',
+    email: 'h662@olbm.app',
     snsList: [
       {
         id: PlatformCodeEnum.INSTAGRAM,
         platform: PlatformEnum.INSTAGRAM,
-        link: 'https://www.instagram.com/puddingi228',
+        link: 'https://www.instagram.com/h662xzerocoke',
       },
       {
         id: PlatformCodeEnum.YOUTUBE,
         platform: PlatformEnum.YOUTUBE,
-        link: 'https://www.youtube.com/channel/UCw2v-EFHM2R_PidUq68_QIA',
+        link: 'https://www.youtube.com/channel/UCrAj5rJzY_YfLFKFwTQgUHg',
       },
     ],
   },
