@@ -1,11 +1,15 @@
-import React, { FC } from 'react'
-import { IPurchase, ITokenItem } from '../lib/type'
-import { useSetRecoilState } from 'recoil'
-import { nftPurchaseReqState } from '../state/nftState'
-import LoadingButton from '@mui/lab/LoadingButton'
+import React, { FC, useCallback, useEffect, useState } from 'react'
+import { CardStateType, IPurchase, ITokenItem } from '../lib/type'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { NftPurchasedStateSelector, nftPurchaseReqState, TokenIdListState } from '../state/nftState'
 import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin'
+import { accountInfoState } from '../state/walletState'
+import { useNavigate } from 'react-router-dom'
+import { Button, createTheme, ThemeProvider } from '@mui/material'
+import { deepPurple } from '@mui/material/colors'
 
 interface CardNFTButton {
+  type: CardStateType
   disabled: boolean
   isLoading: boolean
   message: string
@@ -13,16 +17,29 @@ interface CardNFTButton {
   selectedItem: () => void
 }
 
-const CardNFTButton: FC<CardNFTButton> = ({
-  token,
-  disabled,
-  isLoading,
-  message,
-  selectedItem,
-}) => {
-  const { id, price } = token
+const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message, selectedItem }) => {
+  const theme = createTheme({
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            backgroundColor: '#4738BB',
+          },
+        },
+      },
+    },
+  })
 
+  const { id, price } = token
+  const navigate = useNavigate()
+
+  const setTokenIdList = useSetRecoilState(TokenIdListState)
   const setNftPurchaseReq = useSetRecoilState(nftPurchaseReqState)
+  const accountInfo = useRecoilValue(accountInfoState)
+  const nftPurchasedItem = useRecoilValue<IPurchase | null>(
+    NftPurchasedStateSelector(accountInfo.account),
+  )
+  const [reqState, setReqState] = useState(false)
 
   const handleDonation = (): void => {
     selectedItem()
@@ -31,33 +48,44 @@ const CardNFTButton: FC<CardNFTButton> = ({
       price,
     }
     setNftPurchaseReq(req)
+    setReqState(true)
   }
+
+  const goDonationSuccess = useCallback((): void => {
+    navigate('/donation-success')
+  }, [navigate])
+
+  useEffect(() => {
+    if (!nftPurchasedItem) return
+    type === 'sales' && reqState && setTokenIdList([nftPurchasedItem.tokenId])
+  }, [nftPurchasedItem, type, setTokenIdList, reqState])
+
+  useEffect(() => {
+    reqState && nftPurchasedItem && goDonationSuccess()
+  }, [nftPurchasedItem, reqState, goDonationSuccess])
 
   // view
   return (
-    <div className="mt-4 pb-1">
+    <>
       <div className="bg-gray-600 rounded-md overflow-hidden">
-        <LoadingButton
-          onClick={handleDonation}
-          fullWidth={true}
-          loading={isLoading}
-          loadingPosition="start"
-          startIcon={<CurrencyBitcoinIcon />}
-          variant="contained"
-          size="medium"
-          color="primary"
-          disabled={disabled}>
-          {message}
-        </LoadingButton>
+        <ThemeProvider theme={theme}>
+          <Button
+            fullWidth={true}
+            startIcon={<CurrencyBitcoinIcon color="inherit" />}
+            variant="contained"
+            size="medium"
+            disabled={disabled}
+            sx={{
+              ':hover': {
+                backgroundColor: deepPurple['A400'],
+              },
+            }}
+            onClick={handleDonation}>
+            {message}
+          </Button>
+        </ThemeProvider>
       </div>
-      {/* <button
-        type="button"
-        className="w-full flex items-center justify-center p-2 rounded-lg text-white text-sm font-extrabold bg-aid-purple hover:bg-aid-blue hover:text-gray-800 md:py-4 md:px-10 transition-all duration-300"
-        disabled={disabled || isLoading}
-        onClick={handleDonation}>
-        {message}
-      </button> */}
-    </div>
+    </>
   )
 }
 

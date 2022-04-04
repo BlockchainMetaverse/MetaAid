@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { CardStateType, ITokenItem } from '../lib/type'
 import { FaDove } from 'react-icons/fa'
 import CardNFTButton from './CardNFTButton'
+import CardButtonLoading from './indicator/CardButtonLoading'
 
 interface CardNFTItem {
   type: CardStateType
@@ -61,14 +62,22 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, selectedItem })
             //     message={token.remainTokens ? t('donation') : t('soldout')}
             //   />
             // }>
-            <Suspense fallback={<div>Loading</div>}>
-              <CardNFTButton
-                token={token}
-                disabled={!token.remainTokens}
-                isLoading={false}
-                message={token.remainTokens ? t('donation') : t('soldout')}
-                selectedItem={selectedItem}
-              />
+            <Suspense
+              fallback={
+                <div className="mt-4 pb-1">
+                  <CardButtonLoading />
+                </div>
+              }>
+              <div className="mt-4 pb-1">
+                <CardNFTButton
+                  type={type}
+                  token={token}
+                  disabled={!token.remainTokens}
+                  isLoading={false}
+                  message={token.remainTokens ? t('donation') : t('soldout')}
+                  selectedItem={selectedItem}
+                />
+              </div>
             </Suspense>
           )}
         </div>
