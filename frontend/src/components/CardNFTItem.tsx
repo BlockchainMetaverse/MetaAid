@@ -64,7 +64,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
               <CardNFTButton
                 type={type}
                 token={token}
-                disabled={!token.remainTokens}
+                disabled={type === 'sales' && !token.remainTokens}
                 message={
                   type === 'sales'
                     ? token.remainTokens
