@@ -106,6 +106,7 @@ export interface ITokenItem {
   detail: IUriData
   price: number
   remainTokens: number
+  purchasedTokens?: number
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
@@ -121,6 +122,8 @@ export interface IPurchase {
   price: number
 }
 
-export interface IByTokenIdPurchased {
-  [key: string]: string
+export interface IUserTokenItem {
+  // [key: string]: string
+  tokenId: number
+  purchasedTokens: number
 }

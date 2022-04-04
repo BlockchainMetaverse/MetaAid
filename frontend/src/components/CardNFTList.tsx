@@ -27,11 +27,7 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
 
   useEffect(() => {
     refreshNftList()
-  }, [refreshNftList, tokenIdList])
-
-  useEffect(() => {
-    refreshNftList()
-  }, [refreshNftList, accountInfo])
+  }, [refreshNftList, tokenIdList, accountInfo])
 
   // view
   return (

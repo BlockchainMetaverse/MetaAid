@@ -14,6 +14,7 @@ interface CardNFTItem {
 const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
   const {
     remainTokens,
+    purchasedTokens,
     price,
     detail: { name, description, image },
   } = token
@@ -49,7 +50,9 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
             <div className="text-gray-400 px-1">
               <FaDove />
             </div>
-            <span className="block text-gray-400 px-1">{remainTokens} left</span>
+            <span className="block text-gray-400 px-1">
+              {type === 'profile' ? `You own ${purchasedTokens}` : `${remainTokens} left`}
+            </span>
           </div>
           <Suspense
             fallback={

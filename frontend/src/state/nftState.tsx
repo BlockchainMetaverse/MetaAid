@@ -1,6 +1,6 @@
 import { atom, selectorFamily } from 'recoil'
 import { tokenIds } from '../data/response'
-import { CardStateType, IPurchase, ITokenItem, IByTokenIdPurchased, IUriData } from '../lib/type'
+import { CardStateType, IPurchase, ITokenItem, IUserTokenItem, IUriData } from '../lib/type'
 import { header } from '../lib/utils'
 import { saleContract, web3 } from '../web3Config'
 import { initialPurchase } from './initialState'
@@ -10,12 +10,6 @@ export const TokenIdListState = atom<number[]>({
   key: 'TokenIdListState',
   default: [],
 })
-
-// const getDetail = async (uri: string): Promise<IUriData> => {
-//   const response = await fetch(`${uri}`, header)
-//   const result = await response.json()
-//   return result
-// }
 
 const getTokenList = async (tokenIds: number[]): Promise<ITokenItem[]> => {
   if (!tokenIds.length) return []
@@ -47,17 +41,28 @@ const getTokenList = async (tokenIds: number[]): Promise<ITokenItem[]> => {
 
 const getUserTokenList = async (account: string): Promise<ITokenItem[]> => {
   try {
-    const allTokenData: ITokenItem[] = await getTokenList(tokenIds)
+    const allTokenList: ITokenItem[] = await getTokenList(tokenIds)
     const tokenReq: [string[], string[]] = await saleContract.methods
       .getMetaAidTokens(account)
       .call()
     const userTokenIds = tokenReq[0]
     const purchasedTokens = tokenReq[1]
-    const tokenData: IByTokenIdPurchased[] = userTokenIds.map((id, index) => ({
-      [id]: purchasedTokens[index],
-    }))
-    console.log('tokenReq', tokenReq)
-    console.log('allTokenData', allTokenData, 'tokenData', tokenData)
+    const filteredtokenData: IUserTokenItem[] = userTokenIds
+      .map((id, index) => ({
+        tokenId: Number(id),
+        purchasedTokens: Number(purchasedTokens[index]),
+      }))
+      .filter((token) => token.purchasedTokens)
+    if (!filteredtokenData.length) return []
+    let resultData: ITokenItem[] = []
+    filteredtokenData.forEach((filterToken) => {
+      const targetItem = allTokenList.find(
+        (token) => token.id === filterToken.tokenId,
+      ) as ITokenItem
+      targetItem.purchasedTokens = filterToken.purchasedTokens
+      resultData = [...resultData, targetItem]
+    })
+    return resultData
   } catch (error) {
     console.error(error)
   }
