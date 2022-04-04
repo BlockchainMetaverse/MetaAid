@@ -1,10 +1,12 @@
 import React, { FC, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue } from 'recoil'
 import { tokenIds } from '../data/response'
 import { CardStateType } from '../lib/type'
 import { NftListStateSelector, TokenIdListState } from '../state/nftState'
 import { accountInfoState } from '../state/walletState'
 import CardNFTItem from './CardNFTItem'
+import ItemEmpty from './ItemEmpty'
 
 interface CardNFList {
   type: CardStateType
@@ -12,6 +14,7 @@ interface CardNFList {
 }
 
 const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
+  const { t } = useTranslation()
   const [accountInfo, setAccountInfo] = useRecoilState(accountInfoState)
 
   // 모든 토큰 get을 위한 state
@@ -32,6 +35,15 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
   // view
   return (
     <>
+      {!nftList.length && (
+        <div className="w-full text-center">
+          <ItemEmpty
+            mainTitle={t('profile.empty_main_title')}
+            subTitle={t('profile.empty_sub_title')}
+            color="white"
+          />
+        </div>
+      )}
       {nftList.map((nft) => (
         <CardNFTItem key={nft.id} type={type} dataFormat={dataFormat} token={nft} />
       ))}
