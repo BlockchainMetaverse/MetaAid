@@ -1,14 +1,8 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from 'recoil'
+import React, { FC, useEffect } from 'react'
+import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue } from 'recoil'
 import { tokenIds } from '../data/response'
-import { CardStateType, IPurchase } from '../lib/type'
-import {
-  NftListStateSelector,
-  NftPurchasedStateSelector,
-  TokenIdListState,
-} from '../state/nftState'
-import { accountInfoState } from '../state/walletState'
+import { CardStateType } from '../lib/type'
+import { NftListStateSelector, TokenIdListState } from '../state/nftState'
 import CardNFTItem from './CardNFTItem'
 
 interface CardNFList {
@@ -17,46 +11,22 @@ interface CardNFList {
 }
 
 const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
-  const navigate = useNavigate()
-
-  // success 위한 state
-  const accountInfo = useRecoilValue(accountInfoState)
-  const nftPurchasedItem = useRecoilValue<IPurchase | null>(
-    NftPurchasedStateSelector(accountInfo.account),
-  )
-
-  const [reqState, setReqState] = useState(false)
-
   // 모든 토큰 get을 위한 state
-  const setTokenIdList = useSetRecoilState(TokenIdListState)
+  const [tokenIdList, setTokenIdList] = useRecoilState(TokenIdListState)
   const nftList = useRecoilValue(NftListStateSelector)
   const refreshNftList = useRecoilRefresher_UNSTABLE(NftListStateSelector)
-
-  const goDonationSuccess = useCallback((): void => {
-    navigate('/donation-success')
-  }, [navigate])
-
   const handleDonation = (): void => {
-    setReqState(true)
+    // setReqState(true)
   }
 
   useEffect(() => {
-    if (type === 'sales') {
-      // donation 페이지 일경우 NftList 강제 refresh
-      setTokenIdList(tokenIds)
-      refreshNftList()
-      return
-    }
-  }, [type, setTokenIdList, refreshNftList])
+    // donation 페이지 일경우 NftList 강제 refresh
+    type === 'sales' && setTokenIdList(tokenIds)
+  }, [setTokenIdList, type])
 
   useEffect(() => {
-    if (!nftPurchasedItem) return
-    type === 'success' && setTokenIdList([nftPurchasedItem.tokenId])
-  }, [nftPurchasedItem, type, setTokenIdList])
-
-  useEffect(() => {
-    reqState && nftPurchasedItem && goDonationSuccess()
-  }, [nftPurchasedItem, reqState, goDonationSuccess])
+    refreshNftList()
+  }, [refreshNftList, tokenIdList])
 
   // view
   return (
