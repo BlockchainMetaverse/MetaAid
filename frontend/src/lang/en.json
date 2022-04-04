@@ -33,5 +33,7 @@
   "donation.success": "You donate",
   "donation.your_nft": "Your NFT",
   "donation.sns_title": "Help this campaingn reach others by share to your beloved, friends and family",
-  "donation.sns_hashtag": "#cryptocurrencyDonation #standWithUkraine #metaAidDonationChallenge"
+  "donation.sns_hashtag": "#cryptocurrencyDonation #standWithUkraine #metaAidDonationChallenge",
+  "profile.empty_main_title": "Your NFT is empty.",
+  "profile.empty_sub_title": "Looks like it hasn't been donated yet."
 }
