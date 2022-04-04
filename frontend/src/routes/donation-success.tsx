@@ -27,7 +27,7 @@ const DonationSuccess: FC = () => {
         </Suspense>
       </div>
       <div className={`${style.contentInterval} pb-0 md:pb-0 max-w-2xl mx-auto`}>
-        <div className="flex flex-wrap -mx-1 w-full justify-center">
+        <div className="flex flex-wrap -mx-1 w-full">
           <Suspense
             fallback={
               <div className="w-1/2">
