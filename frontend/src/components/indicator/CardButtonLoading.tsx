@@ -17,7 +17,10 @@ const theme = createTheme({
   },
 })
 
-const CardButtonLoading: FC = () => {
+interface CardButtonLoading {
+  message: string
+}
+const CardButtonLoading: FC<CardButtonLoading> = ({ message }) => {
   return (
     <div className="rounded-md overflow-hidden bg-gray-800">
       <ThemeProvider theme={theme}>
@@ -27,7 +30,7 @@ const CardButtonLoading: FC = () => {
           startIcon={<CircularProgress color="inherit" size={20} />}
           disabled
           size="medium">
-          <span className="text-white text-opacity-30">Loading...</span>
+          <span className="text-white text-opacity-30">{message}</span>
         </Button>
       </ThemeProvider>
     </div>

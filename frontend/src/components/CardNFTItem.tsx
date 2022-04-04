@@ -9,10 +9,9 @@ interface CardNFTItem {
   type: CardStateType
   dataFormat: string
   token: ITokenItem
-  selectedItem: () => void
 }
 
-const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, selectedItem }) => {
+const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
   const {
     remainTokens,
     price,
@@ -53,19 +52,10 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, selectedItem })
             <span className="block text-gray-400 px-1">{remainTokens} left</span>
           </div>
           {type === 'sales' && (
-            // <Suspense
-            // fallback={
-            //   <CardNFTButton
-            //     token={token}
-            //     disabled={true}
-            //     isLoading={true}
-            //     message={token.remainTokens ? t('donation') : t('soldout')}
-            //   />
-            // }>
             <Suspense
               fallback={
                 <div className="mt-4 pb-1">
-                  <CardButtonLoading />
+                  <CardButtonLoading message={token.remainTokens ? t('donation') : t('soldout')} />
                 </div>
               }>
               <div className="mt-4 pb-1">
@@ -73,9 +63,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token, selectedItem })
                   type={type}
                   token={token}
                   disabled={!token.remainTokens}
-                  isLoading={false}
                   message={token.remainTokens ? t('donation') : t('soldout')}
-                  selectedItem={selectedItem}
                 />
               </div>
             </Suspense>

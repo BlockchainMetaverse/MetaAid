@@ -10,14 +10,12 @@ import { deepPurple } from '@mui/material/colors'
 
 interface CardNFTButton {
   type: CardStateType
-  disabled: boolean
-  isLoading: boolean
-  message: string
   token: ITokenItem
-  selectedItem: () => void
+  disabled: boolean
+  message: string
 }
 
-const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message, selectedItem }) => {
+const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message }) => {
   const theme = createTheme({
     components: {
       MuiButton: {
@@ -42,7 +40,6 @@ const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message, sele
   const [reqState, setReqState] = useState(false)
 
   const handleDonation = (): void => {
-    selectedItem()
     const req: IPurchase = {
       tokenId: id,
       price,

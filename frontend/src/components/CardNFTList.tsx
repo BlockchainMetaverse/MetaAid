@@ -15,9 +15,6 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
   const [tokenIdList, setTokenIdList] = useRecoilState(TokenIdListState)
   const nftList = useRecoilValue(NftListStateSelector)
   const refreshNftList = useRecoilRefresher_UNSTABLE(NftListStateSelector)
-  const handleDonation = (): void => {
-    // setReqState(true)
-  }
 
   useEffect(() => {
     // donation 페이지 일경우 NftList 강제 refresh
@@ -32,13 +29,7 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
   return (
     <>
       {nftList.map((nft) => (
-        <CardNFTItem
-          key={nft.id}
-          type={type}
-          dataFormat={dataFormat}
-          token={nft}
-          selectedItem={handleDonation}
-        />
+        <CardNFTItem key={nft.id} type={type} dataFormat={dataFormat} token={nft} />
       ))}
     </>
   )
