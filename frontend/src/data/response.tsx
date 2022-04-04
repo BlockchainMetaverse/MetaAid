@@ -69,6 +69,29 @@ export const personInfoList: InfoType[] = [
     ],
   },
 ]
+export const teamInfo: InfoType = {
+  id: 1,
+  nickname: 'Team Meta Aid',
+  position: 'Blockchain',
+  email: 'admin@meta-aid.app',
+  snsList: [
+    {
+      id: PlatformCodeEnum.TWITTER,
+      platform: PlatformEnum.TWITTER,
+      link: 'https://twitter.com/aid_meta',
+    },
+    {
+      id: PlatformCodeEnum.GITHUB,
+      platform: PlatformEnum.GITHUB,
+      link: 'https://github.com/BlockchainMetaverse/MetaAid',
+    },
+    {
+      id: PlatformCodeEnum.LINKEDIN,
+      platform: PlatformEnum.LINKEDIN,
+      link: 'todo..',
+    },
+  ],
+}
 
 export const warMainImage: ImageInfoType = {
   id: 1,
