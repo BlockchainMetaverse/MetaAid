@@ -25,9 +25,13 @@ const Header: FC = () => {
     { name: t('qna'), link: '/qna' },
   ]
 
+  const headerBg = { backgroundImage: 'url(/images/header_bg.svg)' }
+
   return (
     <Popover>
-      <div className="py-4 px-4 md:py-6 md:px-8 fixed top-0 left-0 right-0 z-20 bg-aid-purple">
+      <div
+        className="py-8 px-4 md:py-6 md:px-8 fixed top-0 left-0 right-0 z-20 bg-left-top bg-repeat-x h-32 flex flex-col justify-center"
+        style={headerBg}>
         <nav className="relative flex items-center justify-between" aria-label="Global">
           <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
             <div className="flex items-center justify-between w-full md:w-auto relative z-30">
@@ -39,12 +43,6 @@ const Header: FC = () => {
                 />
                 <span className="sr-only">Meta aid</span>
               </Link>
-              {/* <div className="-mr-2 flex items-center md:hidden">
-                <Popover.Button className="rounded-md p-2 inline-flex items-center justify-center text-white">
-                  <span className="sr-only">Open main menu</span>
-                  <MenuIcon className="h-6 w-6" aria-hidden="true" />
-                </Popover.Button>
-              </div> */}
             </div>
           </div>
           <div className="hidden md:block md:ml-auto md:space-x-8">
