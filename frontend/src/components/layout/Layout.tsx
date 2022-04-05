@@ -11,7 +11,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
     <div className="wrap overflow-hidden">
       <Header />
       <div className="bg-aid-purple">
-        <main className="pt-18 md:pt-22 pb-4 md:pb-6 px-4 md:px-8 min-h-screen">{children}</main>
+        <main className="pt-20 md:pt-32 pb-4 md:pb-6 px-4 md:px-8 min-h-screen">{children}</main>
         <Footer />
       </div>
     </div>

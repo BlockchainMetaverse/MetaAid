@@ -30,7 +30,7 @@ const Header: FC = () => {
   return (
     <Popover>
       <div
-        className="py-8 px-4 md:py-6 md:px-8 fixed top-0 left-0 right-0 z-20 bg-left-top bg-repeat-x h-32 flex flex-col justify-center"
+        className="py-8 px-4 md:py-6 md:px-8 fixed top-0 left-0 right-0 z-20 bg-left-top bg-repeat-x h-20 md:h-32 flex flex-col justify-center"
         style={headerBg}>
         <nav className="relative flex items-center justify-between" aria-label="Global">
           <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
