@@ -9,11 +9,11 @@ import "MintMetaAidToken.sol";
 contract SaleMetaAidToken is Ownable {
     MintMetaAidToken public mintMetaAidToken;
 
-    address public ukraineAddress;
+    address public aidAddress;
 
-    constructor(address _mintMetaAidToken, address _ukraineAddress) {
+    constructor(address _mintMetaAidToken, address _aidAddress) {
         mintMetaAidToken = MintMetaAidToken(_mintMetaAidToken);
-        ukraineAddress = _ukraineAddress;
+        aidAddress = _aidAddress;
     }
 
     mapping(uint => uint) public tokenPrices;
@@ -40,10 +40,7 @@ contract SaleMetaAidToken is Ownable {
         require(owner() != msg.sender, "Caller is service address.");
         require(remainTokens[_tokenId] > 0, "This MetaAidToken is sold out.");
 
-        // All ETHs will be transfered to Ukraine.
-        // Ukraine ETH Address - 0x165CD37b4C644C2921454429E7F9358d18A45e14
-        // https://twitter.com/Ukraine/status/1497594592438497282
-        payable(ukraineAddress).transfer(msg.value);
+        payable(aidAddress).transfer(msg.value);
 
         mintMetaAidToken.safeTransferFrom(owner(), msg.sender, _tokenId, 1, "");
 
@@ -79,5 +76,9 @@ contract SaleMetaAidToken is Ownable {
         uint remainToken = remainTokens[_tokenId];
 
         return (tokenUri, tokenPrice, remainToken);
+    }
+
+    function setAidAddress(address _aidAddress) public onlyOwner {
+        aidAddress = _aidAddress;
     }
 }
