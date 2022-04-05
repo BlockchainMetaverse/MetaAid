@@ -2,7 +2,7 @@
   "hello": "안녕하세요",
   "donation": "기부하기",
   "soldout": "판매완료",
-  "go_to_opensea": "Opensea 가기",
+  "go_to_opensea": "OpenSea 가기",
   "war_news": "전쟁 뉴스",
   "profile": "Profile",
   "qna": "QnA",
@@ -33,7 +33,7 @@
   "donation.success": "구매가 완료되었습니다.",
   "donation.your_nft": "Your NFT",
   "donation.sns_title": "이 캠페인을 사랑하는 사람, 친구 및 가족에게 공유하여 많은 사람들에게 알려주세요.",
-  "donation.sns_hashtag": "#암호화폐기부 #우크라이나기부 #standWithUkraine #metaAidDonationChallenge",
+  "donation.sns_hashtag": "#metaAidDonationChallenge #암호화폐기부 #우크라이나기부 #standWithUkraine",
   "profile.empty_main_title": "NFT가 비어있습니다.",
   "profile.empty_sub_title": "아직 기부하지 않은것 같습니다."
 }

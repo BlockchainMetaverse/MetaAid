@@ -124,3 +124,5 @@ export const warSubImages: ImageInfoType[] = [
 export const tokenIds = [1, 2, 3]
 
 export const openSeaUri = `https://testnets.opensea.io/assets/mumbai/${mintContractAddress}`
+
+export const metaAidUri = 'https://www.meta-aid.app/'
