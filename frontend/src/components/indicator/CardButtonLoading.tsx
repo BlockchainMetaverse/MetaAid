@@ -9,7 +9,6 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          // backgroundColor: 'rgba(255,255,255, 0.2)',
           backgroundColor: grey[800],
         },
       },
@@ -22,18 +21,19 @@ interface CardButtonLoading {
 }
 const CardButtonLoading: FC<CardButtonLoading> = ({ message }) => {
   return (
-    <div className="rounded-md overflow-hidden bg-gray-800">
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <div className="rounded-md overflow-hidden bg-gray-800">
         <Button
           fullWidth={true}
           variant="outlined"
           startIcon={<CircularProgress color="inherit" size={20} />}
           disabled
+          style={{ textTransform: 'none' }}
           size="medium">
-          <span className="text-white text-opacity-30">{message}</span>
+          <span className="text-white text-opacity-30 ">{message}</span>
         </Button>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   )
 }
 

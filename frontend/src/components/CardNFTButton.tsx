@@ -80,6 +80,7 @@ const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message }) =>
             startIcon={<CurrencyBitcoinIcon color="inherit" />}
             variant="contained"
             size="medium"
+            style={{ textTransform: 'none' }}
             disabled={disabled}
             sx={{
               ':hover': {
@@ -87,7 +88,7 @@ const CardNFTButton: FC<CardNFTButton> = ({ type, token, disabled, message }) =>
               },
             }}
             onClick={handleClick}>
-            {message}
+            <span className="text-white text-sm md:text-base">{message}</span>
           </Button>
         </ThemeProvider>
       </div>
