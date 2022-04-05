@@ -6,6 +6,7 @@ import Account from '../components/Account'
 import CardNFTList from '../components/CardNFTList'
 import CardLoading from '../components/indicator/CardLoading'
 import Share from '../components/Share'
+import ShareCampain from '../components/ShareCampain'
 import { tokenIds } from '../data/response'
 import { style } from '../data/style'
 import { accountInfoState } from '../state/walletState'
@@ -25,7 +26,7 @@ const Profile: FC = () => {
   return (
     <div className="max-w-2xl mx-auto pt-4 md:pt-6">
       {active && (
-        <div data-aos="fade-up" className={`${style.contentInterval}`}>
+        <div className={`${style.contentInterval}`}>
           <Account info={accountInfo} />
         </div>
       )}
@@ -41,10 +42,8 @@ const Profile: FC = () => {
           </Suspense>
         </div>
       </div>
-      <div
-        data-aos="fade-up"
-        data-aos-delay="300"
-        className={`${style.contentInterval} text-center`}>
+      <ShareCampain title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
+      <div className={`${style.contentInterval} text-center`}>
         <Share title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
       </div>
     </div>
