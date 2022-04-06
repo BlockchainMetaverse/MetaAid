@@ -1,5 +1,5 @@
 import { atom, selectorFamily } from 'recoil'
-import { tokenIds } from '../data/response'
+import { networks, tokenIds } from '../data/response'
 import { CardStateType, IPurchase, ITokenItem, IUserTokenItem, IUriData } from '../lib/type'
 import { header } from '../lib/utils'
 import { saleContract, web3 } from '../web3Config'
@@ -39,6 +39,25 @@ const getTokenList = async (tokenIds: number[]): Promise<ITokenItem[]> => {
   return []
 }
 
+const getOpenseaTokenList = async (): Promise<ITokenItem[]> => {
+  try {
+    if (!window.ethereum) throw new Error('No crypto wallet found')
+    // polygon 네트워크로 switch
+    await window.ethereum.request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        {
+          ...networks['polygon'],
+        },
+      ],
+    })
+    return await getTokenList(tokenIds)
+  } catch (err) {
+    console.error('err', err)
+  }
+  return []
+}
+
 const getUserTokenList = async (account: string): Promise<ITokenItem[]> => {
   try {
     const allTokenList: ITokenItem[] = await getTokenList(tokenIds)
@@ -72,13 +91,15 @@ const getUserTokenList = async (account: string): Promise<ITokenItem[]> => {
 /* eslint-disable indent */
 export const NftListStateSelector = selectorFamily<ITokenItem[], CardStateType>({
   key: 'NftListStateSelector',
-  get:
-    (type: CardStateType) =>
-    async ({ get }): Promise<ITokenItem[]> => {
-      const tokenIds = get(TokenIdListState)
-      const { account } = get(accountInfoState)
-      return type === 'profile' && account ? getUserTokenList(account) : getTokenList(tokenIds)
-    },
+  get: (type: CardStateType) => async ({ get }): Promise<ITokenItem[]> => {
+    const tokenIds = get(TokenIdListState)
+    const { account } = get(accountInfoState)
+    return type === 'profile' && account
+      ? getUserTokenList(account)
+      : type === 'home'
+      ? getOpenseaTokenList()
+      : getTokenList(tokenIds)
+  },
   // set: ({ set }, newVale: number[]) => set(TokenIdListState, newVale),
 })
 
@@ -119,19 +140,17 @@ export const nftPurchaseReqState = atom<IPurchase>({
 /* eslint-disable indent */
 export const NftPurchasedStateSelector = selectorFamily<IPurchase | null, string>({
   key: 'NftPurchasedStateSelector',
-  get:
-    (account: string) =>
-    async ({ get }) => {
-      const { tokenId, price } = get(nftPurchaseReqState)
-      if (!tokenId) return null
-      try {
-        const response = await saleContract.methods
-          .purchaseMetaAidToken(tokenId)
-          .send({ from: account, value: web3.utils.toWei(String(price)) })
-        return response.status ? { tokenId, price } : null
-      } catch (error) {
-        console.error(error)
-      }
-      return null
-    },
+  get: (account: string) => async ({ get }) => {
+    const { tokenId, price } = get(nftPurchaseReqState)
+    if (!tokenId) return null
+    try {
+      const response = await saleContract.methods
+        .purchaseMetaAidToken(tokenId)
+        .send({ from: account, value: web3.utils.toWei(String(price)) })
+      return response.status ? { tokenId, price } : null
+    } catch (error) {
+      console.error(error)
+    }
+    return null
+  },
 })

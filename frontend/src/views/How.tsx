@@ -175,7 +175,7 @@ const Why: FC = () => {
                 <CardLoading />
               </div>
             ))}>
-            <CardNFTList type={'sales'} dataFormat={'video'} />
+            <CardNFTList type={'home'} dataFormat={'video'} />
           </Suspense>
         </div>
       </div>

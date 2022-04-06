@@ -29,9 +29,10 @@ export const cardState = {
   SALES: 'sales',
   SUCCESS: 'success',
   PROFILE: 'profile',
+  HOME: 'home',
 } as const
 
-export type CardStateType = typeof cardState[keyof typeof cardState] // "sales" | "success" | "profile"
+export type CardStateType = typeof cardState[keyof typeof cardState] // "sales" | "success" | "profile" | "home"
 
 export interface InfoType {
   id: number
