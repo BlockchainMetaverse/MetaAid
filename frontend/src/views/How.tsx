@@ -1,6 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
+import CardNFTList from '../components/CardNFTList'
+import CardLoading from '../components/indicator/CardLoading'
 import TitleBox from '../components/TitleBox'
+import { tokenIds } from '../data/response'
 
 const Why: FC = () => {
   const { t } = useTranslation()
@@ -158,13 +161,22 @@ const Why: FC = () => {
           </div>
         </div>
         {/* START: 4 step */}
-        <div
+        {/* <div
           data-aos="zoom-in-up"
           className="py-8 md:py-14 -mt-8 md:-mt-14 overflow-hidden relative">
           <div className="w-36 md:w-48 rounded-full overflow-hidden ml-auto relative z-10">
             <img src="./images/temp/1.png" alt="NFT" />
-            {/* <img src="./images/contents/nft_gold.png" alt="NFT" /> */}
           </div>
+        </div> */}
+        <div className="flex flex-wrap -mx-1 w-full">
+          <Suspense
+            fallback={tokenIds.map((id) => (
+              <div className="w-1/2" key={id}>
+                <CardLoading />
+              </div>
+            ))}>
+            <CardNFTList type={'sales'} dataFormat={'video'} />
+          </Suspense>
         </div>
       </div>
     </>
