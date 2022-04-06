@@ -43,7 +43,6 @@
     "magic-sdk": "7.0.0",
     "mini-svg-data-uri": "^1.4.4",
     "moralis": "^1.3.5",
-    "node-sass": "4.14.1",
     "process": "^0.11.10",
     "react": "^17.0.2",
     "react-app-rewired": "^2.2.1",
@@ -92,6 +91,7 @@
     "@tailwindcss/forms": "^0.5.0",
     "autoprefixer": "9",
     "buffer": "^6.0.3",
+    "node-sass": "6.0.0",
     "postcss": "7",
     "postcss-loader": "^6.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
