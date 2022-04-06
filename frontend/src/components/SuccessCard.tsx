@@ -22,7 +22,7 @@ const SuccessCard: FC = () => {
           </div>
           <div className="text-gray-800 py-4 md:py-6">
             <p className="sub-title text-base md:text-lg font-normal py-1 md:py-2">
-              {t('donation.success')} {nftPurchasedItem.price}ETH
+              {t('donation.success')} {nftPurchasedItem.price}MATIC
             </p>
             <h2 className="title tracking-tight font-black text-xl md:text-3xl py-1 md:py-2">
               {t('donation.thank')}

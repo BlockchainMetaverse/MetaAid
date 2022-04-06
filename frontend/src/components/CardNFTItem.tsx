@@ -20,7 +20,8 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
   } = token
 
   const { t } = useTranslation()
-  const ethereumBg = { backgroundImage: 'url(/images/ethereum.svg)' }
+  // const coinBg = { backgroundImage: 'url(/images/ethereum.svg)' }
+  const coinBg = { backgroundImage: 'url(/images/matic.png)' }
 
   // view
   return (
@@ -42,7 +43,7 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
           <div className="flex items-center">
             <span className="block py-1 text-white font-bold">{name}</span>
             <div className="flex items-center ml-auto py-1">
-              <i className="w-4 h-4 bg-no-repeat bg-left-top bg-contain" style={ethereumBg} />
+              <i className="w-4 h-4 bg-no-repeat bg-left-top bg-contain mr-1" style={coinBg} />
               <span className="block text-white font-bold">{price}</span>
             </div>
           </div>

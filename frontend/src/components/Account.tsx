@@ -31,7 +31,9 @@ const Account: FC<AccountProps> = ({ info: { account, balance } }) => {
           </CopyToClipboard>
         </div>
       </div>
-      <p className={`text-lg md:text-xl font-bold ${style.innerContentInterval}`}>{balance} ETH</p>
+      <p className={`text-lg md:text-xl font-bold ${style.innerContentInterval}`}>
+        {balance} MATIC
+      </p>
       <div className={`${style.innerContentInterval} pb-0`}>
         <WalletDisconnect />
       </div>
