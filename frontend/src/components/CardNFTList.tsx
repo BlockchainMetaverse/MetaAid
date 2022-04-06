@@ -2,11 +2,14 @@ import React, { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRecoilRefresher_UNSTABLE, useRecoilState, useRecoilValue } from 'recoil'
 import { tokenIds } from '../data/response'
+import { style } from '../data/style'
 import { CardStateType } from '../lib/type'
 import { NftListStateSelector, TokenIdListState } from '../state/nftState'
 import { accountInfoState } from '../state/walletState'
 import CardNFTItem from './CardNFTItem'
 import ItemEmpty from './ItemEmpty'
+import Share from './ShareCampain'
+import ShareCampain from './ShareCampain'
 
 interface CardNFList {
   type: CardStateType
@@ -35,7 +38,7 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
   // view
   return (
     <>
-      {!nftList.length && (
+      {type === 'profile' && !nftList.length ? (
         <div className="w-full text-center">
           <ItemEmpty
             mainTitle={t('profile.empty_main_title')}
@@ -43,10 +46,21 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
             color="white"
           />
         </div>
+      ) : (
+        <>
+          {nftList.map((nft) => (
+            <CardNFTItem key={nft.id} type={type} dataFormat={dataFormat} token={nft} />
+          ))}
+          {type !== 'sales' && nftList.length && (
+            <>
+              <ShareCampain title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
+              <div className={`${style.contentInterval} text-center`}>
+                <Share title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
+              </div>
+            </>
+          )}
+        </>
       )}
-      {nftList.map((nft) => (
-        <CardNFTItem key={nft.id} type={type} dataFormat={dataFormat} token={nft} />
-      ))}
     </>
   )
 }
