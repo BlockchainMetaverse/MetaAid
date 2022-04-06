@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import { AbiItem } from 'web3-utils'
+import { networks } from './data/response'
 
 const mintABI: AbiItem[] = [
   {
@@ -774,17 +775,16 @@ const saleABI: AbiItem[] = [
     type: 'function',
   },
 ]
-
 // testnet
-// export const mintContractAddress = '0xA216A35660cd75CA835A3BF98D1C8F8F038b9638'
-// const saleContractAddress = '0x06a77FFCb248b2158A4a1039889418e2CcBa6129'
+// export const mintContractAddress = '0x8Bd7237DFFFD185398Abfb6a3cc9e2C64BAEe27B'
+// const saleContractAddress = '0x6ddB0f5aF6dc984e5868aBFD2a5Ef19392fDa894'
 
 // mainnet
 export const mintContractAddress = '0x037165fF9591393Ab960d46082E872A6d2a75c2F'
 const saleContractAddress = '0x273f8ec9F9909707D6Edb7010baC47301915FBbe'
 
 // export const web3 = new Web3(window.ethereum)
-export const web3 = new Web3(window.ethereum || 'https://rpc-mumbai.maticvigil.com/')
+export const web3 = new Web3(window.ethereum || networks.polygon.rpcUrls[0])
 
 export const mintContract = new web3.eth.Contract(mintABI, mintContractAddress)
 export const saleContract = new web3.eth.Contract(saleABI, saleContractAddress)

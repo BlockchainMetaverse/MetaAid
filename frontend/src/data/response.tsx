@@ -121,8 +121,36 @@ export const warSubImages: ImageInfoType[] = [
   },
 ]
 
+export const snsTitle = 'Stand with Ukraine'
+
 export const tokenIds = [1, 2, 3]
+
 // export const openSeaUri = `https://testnets.opensea.io/assets/mumbai/${mintContractAddress}`
 export const openSeaUri = `https://opensea.io/assets/matic/${mintContractAddress}`
 
 export const metaAidUri = 'https://www.meta-aid.app/'
+
+export const networks = {
+  polygon: {
+    chainId: `0x${Number(137).toString(16)}`,
+    chainName: 'Polygon Mainnet',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://matic-mainnet-full-rpc.bwarelabs.com/'],
+    blockExplorerUrls: ['https://polygonscan.com/'],
+  },
+  mumbai: {
+    chainId: `0x${Number(80001).toString(16)}`,
+    chainName: 'Matic Mumbai',
+    nativeCurrency: {
+      name: 'MATIC',
+      symbol: 'MATIC',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
+  },
+}
