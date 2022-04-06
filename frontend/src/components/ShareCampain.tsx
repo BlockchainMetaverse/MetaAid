@@ -10,7 +10,7 @@ interface ShareProps {
 const Share: FC<ShareProps> = ({ title, hashtag }) => {
   return (
     <>
-      <p className="text-base md:text-lg text-white">{title}</p>
+      <p className="text-base md:text-lg text-white text-center">{title}</p>
       <div className={style.contentInterval}>
         <div className="items-center bg-white rounded-lg overflow-hidden py-1 md:py-2 px-4 w-fit mx-auto">
           <p className="text-sm md:text-lg inline align-middle">{hashtag}</p>

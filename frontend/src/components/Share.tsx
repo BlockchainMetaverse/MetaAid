@@ -13,14 +13,14 @@ import {
   // LinkedinIcon,
   TelegramIcon,
 } from 'react-share'
-import { metaAidUri } from '../data/response'
+import { metaAidUri, snsTitle } from '../data/response'
 
 interface ShareProps {
   title: string
   hashtag: string
 }
 
-const Share: FC<ShareProps> = ({ title, hashtag }) => {
+const Share: FC<ShareProps> = ({ hashtag }) => {
   const hashtags: string[] = hashtag.split('#').filter((tag) => !!tag)
   return (
     <>
@@ -30,13 +30,13 @@ const Share: FC<ShareProps> = ({ title, hashtag }) => {
           <FacebookShareButton
             // url={'https://themetakongz.com/'}
             url={metaAidUri}
-            quote={title}
+            quote={snsTitle}
             hashtag={hashtag}>
             <FacebookIcon size={60} round={true} />
           </FacebookShareButton>
         </div>
         <div className="px-3">
-          <TwitterShareButton url={metaAidUri} title={title} hashtags={hashtags}>
+          <TwitterShareButton url={metaAidUri} title={snsTitle} hashtags={hashtags}>
             <TwitterIcon size={60} round={true} />
           </TwitterShareButton>
         </div>
