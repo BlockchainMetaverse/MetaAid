@@ -3,6 +3,7 @@ import {
   FileFormatEnum,
   ImageInfoType,
   InfoType,
+  ITokenItem,
   PlatformCodeEnum,
   PlatformEnum,
   WalletClassType,
@@ -129,6 +130,45 @@ export const tokenIds = [1, 2, 3]
 export const openSeaUri = `https://opensea.io/assets/matic/${mintContractAddress}`
 
 export const metaAidUri = 'https://www.meta-aid.app/'
+
+export const staticNFTList: ITokenItem[] = [
+  {
+    id: 1,
+    uri: 'https://olbm.mypinata.cloud/ipfs/QmYghfP9jFwgK3XXL6TzHb5pC4Y7sGPxtViLQVJoGjC8hP',
+    detail: {
+      name: 'Meta Aid Token - UKR',
+      description:
+        'We want our team to stand in Ukraine and help. We would like you to participate in donating to Ukraine in cryptocurrency.',
+      image: 'https://olbm.mypinata.cloud/ipfs/QmTtd8Jy1dh3jLBL9kgpZzYGVcfnXgm6sGtzaWkqkuQCHw',
+    },
+    price: 1000,
+    remainTokens: 0,
+  },
+  {
+    id: 2,
+    uri: 'https://olbm.mypinata.cloud/ipfs/QmQM2wShzrFy1oZDc5eosVkBBwcvD9asVw5575vX38PU26',
+    detail: {
+      name: 'Meta Aid Token - Gold',
+      description:
+        'We want our team to stand in Ukraine and help. We would like you to participate in donating to Ukraine in cryptocurrency.',
+      image: 'https://olbm.mypinata.cloud/ipfs/QmcD88dkLKXK9JMRxDrq32CzQQAcHTrkNoAJ1LHkh9o5K5',
+    },
+    price: 500,
+    remainTokens: 0,
+  },
+  {
+    id: 3,
+    uri: 'https://olbm.mypinata.cloud/ipfs/QmTzSrSoFPSpXba3cR6mPrjtvLryQiCkfcrwVg1Fyxmmqg',
+    detail: {
+      name: 'Meta Aid Token - Silver',
+      description:
+        'We want our team to stand in Ukraine and help. We would like you to participate in donating to Ukraine in cryptocurrency.',
+      image: 'https://olbm.mypinata.cloud/ipfs/QmUds5CW18MPhwBdL9b5XUhfsUsQVTJc1Rrphu5Tv9DU71',
+    },
+    price: 125,
+    remainTokens: 0,
+  },
+]
 
 export const networks = {
   polygon: {
