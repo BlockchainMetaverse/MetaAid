@@ -42,7 +42,7 @@ const DonationSuccess: FC = () => {
         data-aos="fade-up"
         data-aos-delay="300"
         className={`${style.contentInterval} text-center`}>
-        <Share title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
+        <Share hashtag={t('donation.sns_hashtag')} />
       </div>
       <div
         data-aos="zoom-in"

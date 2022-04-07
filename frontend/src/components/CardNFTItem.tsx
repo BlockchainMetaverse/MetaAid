@@ -47,14 +47,16 @@ const CardNFTItem: FC<CardNFTItem> = ({ type, dataFormat, token }) => {
               <span className="block text-white font-bold">{price}</span>
             </div>
           </div>
-          <div className="flex items-center justify-end py-1 -mx-1">
-            <div className="text-gray-400 px-1">
-              <FaDove />
+          {type !== 'home' && (
+            <div className="flex items-center justify-end py-1 -mx-1">
+              <div className="text-gray-400 px-1">
+                <FaDove />
+              </div>
+              <span className="block text-gray-400 px-1">
+                {type === 'profile' ? `You own ${purchasedTokens}` : `${remainTokens} left`}
+              </span>
             </div>
-            <span className="block text-gray-400 px-1">
-              {type === 'profile' ? `You own ${purchasedTokens}` : `${remainTokens} left`}
-            </span>
-          </div>
+          )}
           {type !== 'home' && (
             <Suspense
               fallback={

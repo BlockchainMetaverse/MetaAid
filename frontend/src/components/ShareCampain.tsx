@@ -2,12 +2,12 @@ import React, { FC } from 'react'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import { style } from '../data/style'
 
-interface ShareProps {
+interface ShareCampainProps {
   title: string
   hashtag: string
 }
 
-const Share: FC<ShareProps> = ({ title, hashtag }) => {
+const ShareCampain: FC<ShareCampainProps> = ({ title, hashtag }) => {
   return (
     <>
       <p className="text-base md:text-lg text-white text-center">{title}</p>
@@ -23,4 +23,4 @@ const Share: FC<ShareProps> = ({ title, hashtag }) => {
   )
 }
 
-export default Share
+export default ShareCampain

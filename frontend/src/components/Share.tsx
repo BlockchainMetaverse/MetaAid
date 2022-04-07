@@ -16,7 +16,6 @@ import {
 import { metaAidUri, snsTitle } from '../data/response'
 
 interface ShareProps {
-  title: string
   hashtag: string
 }
 
