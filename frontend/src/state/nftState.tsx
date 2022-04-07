@@ -1,5 +1,5 @@
 import { atom, selectorFamily } from 'recoil'
-import { networks, staticNFTList, tokenIds } from '../data/response'
+import { staticNFTList, tokenIds } from '../data/response'
 import { CardStateType, IPurchase, ITokenItem, IUserTokenItem, IUriData } from '../lib/type'
 import { header } from '../lib/utils'
 import { saleContract, web3 } from '../web3Config'
@@ -45,24 +45,24 @@ const getTokenList = async (tokenIds: number[]): Promise<ITokenItem[]> => {
 }
 
 const getOpenseaTokenList = async (): Promise<ITokenItem[]> => {
-  // return staticNFTList
-  try {
-    if (!window.ethereum) return []
-    // polygon 네트워크로 switch
-    await window.ethereum.request({
-      method: 'wallet_addEthereumChain',
-      params: [
-        {
-          ...networks['polygon'],
-        },
-      ],
-    })
-    return await getTokenList(tokenIds)
-  } catch (err) {
-    console.error('err', err)
-    throw err
-  }
-  return []
+  return staticNFTList
+  // try {
+  //   if (!window.ethereum) return []
+  //   // polygon 네트워크로 switch
+  //   await window.ethereum.request({
+  //     method: 'wallet_addEthereumChain',
+  //     params: [
+  //       {
+  //         ...networks['polygon'],
+  //       },
+  //     ],
+  //   })
+  //   return await getTokenList(tokenIds)
+  // } catch (err) {
+  //   console.error('err', err)
+  //   throw err
+  // }
+  // return []
 }
 
 const getUserTokenList = async (account: string): Promise<ITokenItem[]> => {
