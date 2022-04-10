@@ -26,11 +26,7 @@ const Share: FC<ShareProps> = ({ hashtag }) => {
       <div
         className={`flex items-center justify-center text-white text-4xl md:text-5xl -mx-4 md:-mx-6 ${style.contentInterval}`}>
         <div className="px-3">
-          <FacebookShareButton
-            // url={'https://themetakongz.com/'}
-            url={metaAidUri}
-            quote={snsTitle}
-            hashtag={hashtag}>
+          <FacebookShareButton url={metaAidUri} quote={snsTitle} hashtag={hashtag}>
             <FacebookIcon size={60} round={true} />
           </FacebookShareButton>
         </div>
