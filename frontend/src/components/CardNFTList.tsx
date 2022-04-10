@@ -53,15 +53,18 @@ const CardNFList: FC<CardNFList> = ({ type, dataFormat }) => {
           ))}
         </>
       )}
-      {type === 'success' ||
-        (type === 'profile' && nftList.length && (
-          <>
-            <ShareCampain title={t('donation.sns_title')} hashtag={t('donation.sns_hashtag')} />
-            <div className={`${style.contentInterval} text-center`}>
-              <Share hashtag={t('donation.sns_hashtag')} />
-            </div>
-          </>
-        ))}
+      {type !== 'sales' && !!nftList.length && (
+        <div>
+          <ShareCampain
+            title={t('donation.sns_title')}
+            hashtag={t('donation.sns_hashtag')}
+            type={type}
+          />
+          <div className={`${style.contentInterval} text-center mx-auto`}>
+            <Share hashtag={t('donation.sns_hashtag')} />
+          </div>
+        </div>
+      )}
     </>
   )
 }
