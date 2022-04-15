@@ -1,11 +1,8 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { style } from '../data/style'
-import { MdOutlineContentCopy } from 'react-icons/md'
-import { BsCheckAll } from 'react-icons/bs'
 import WalletDisconnect from './wallet/WalletDisconnect'
 import { AccountInfoType } from '../lib/type'
-import CopyToClipboard from 'react-copy-to-clipboard'
-import { sleep } from '../lib/utils'
+import Clipboard from '../components/common/Clipboard'
 
 interface AccountProps {
   info: AccountInfoType
@@ -14,14 +11,6 @@ interface AccountProps {
 const Account: FC<AccountProps> = ({ info: { account, balance } }) => {
   const accountElipsis = (): string => {
     return `${account.slice(0, 5)}...${account.slice(-4)}`
-  }
-
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = async (): Promise<void> => {
-    setCopied(true)
-    await sleep(3000)
-    setCopied(false)
   }
 
   return (
@@ -33,26 +22,7 @@ const Account: FC<AccountProps> = ({ info: { account, balance } }) => {
       </div>
       <div className={style.innerContentInterval}>
         <div className="w-min mx-auto">
-          <CopyToClipboard text={account} onCopy={handleCopy}>
-            <button
-              type="button"
-              className={`border flex items-center ${style.roundContent} ${
-                copied
-                  ? 'border-green-500 bg-green-200 bg-opacity-20 text-gray-800'
-                  : 'border-gray-500 bg-gray-800 bg-opacity-80 text-white'
-              }`}>
-              <p className="text-sm md:text-base">{accountElipsis()}</p>
-              <span className="inline-flex items-center ml-2 h-4 w-4">
-                {copied ? (
-                  <span className="inline-block text-green-500 -ml-1">
-                    <BsCheckAll size={'1.5rem'} />
-                  </span>
-                ) : (
-                  <MdOutlineContentCopy />
-                )}
-              </span>
-            </button>
-          </CopyToClipboard>
+          <Clipboard copyText={account} innerText={accountElipsis()} />
         </div>
       </div>
       <p className={`text-lg md:text-xl font-bold ${style.innerContentInterval}`}>
