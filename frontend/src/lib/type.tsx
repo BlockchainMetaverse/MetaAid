@@ -37,6 +37,7 @@ export type CardStateType = typeof cardState[keyof typeof cardState] // "sales" 
 export interface InfoType {
   id: number
   name?: string
+  imgFileName: string
   nickname: string
   position: string
   email: string
