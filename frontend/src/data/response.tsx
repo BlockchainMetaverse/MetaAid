@@ -30,6 +30,7 @@ export const walletList: WalletClassType[] = [
 export const personInfoList: InfoType[] = [
   {
     id: 1,
+    imgFileName: 'programmer_w.svg',
     nickname: 'Somi',
     position: 'FrontEnd',
     email: 'dasom228@gmail.com',
@@ -53,6 +54,7 @@ export const personInfoList: InfoType[] = [
   },
   {
     id: 2,
+    imgFileName: 'programmer_m.svg',
     nickname: 'h662',
     position: 'Smart Contract',
     email: 'h662@olbm.app',
@@ -74,6 +76,7 @@ export const teamInfo: InfoType = {
   id: 1,
   nickname: 'Team Meta Aid',
   position: 'Blockchain',
+  imgFileName: 'programmer_w.svg', // Todo
   email: 'admin@meta-aid.app',
   snsList: [
     {
