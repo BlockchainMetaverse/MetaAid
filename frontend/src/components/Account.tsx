@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { style } from '../data/style'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import { BsCheckAll } from 'react-icons/bs'
@@ -20,13 +20,10 @@ const Account: FC<AccountProps> = ({ info: { account, balance } }) => {
 
   const handleCopy = async (): Promise<void> => {
     setCopied(true)
-    await sleep(10000)
+    await sleep(3000)
     setCopied(false)
   }
 
-  useEffect(() => {
-    console.log('copied!!', copied)
-  }, [copied])
   return (
     <div className={`${style.roundBox}`}>
       <div className={`${style.innerContentInterval} pt-0`}>
