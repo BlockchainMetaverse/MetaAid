@@ -21,7 +21,7 @@ const Account: FC<AccountProps> = ({ info: { account, balance } }) => {
         </div>
       </div>
       <div className={style.innerContentInterval}>
-        <div className="w-min mx-auto">
+        <div className="mx-auto">
           <Clipboard copyText={account} innerText={accountElipsis()} />
         </div>
       </div>
