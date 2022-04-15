@@ -23,13 +23,13 @@ const Clipboard: FC<ClipboardProps> = ({ copyText, innerText }) => {
     <CopyToClipboard text={copyText} onCopy={handleCopy}>
       <button
         type="button"
-        className={`border flex items-center ${style.roundContent} ${
+        className={`border ${style.roundContent} ${
           copied
             ? 'border-green-500 bg-green-200 bg-opacity-20 text-gray-800'
             : 'border-gray-500 bg-gray-800 bg-opacity-80 text-white'
         }`}>
-        <p className="text-sm md:text-base">{innerText}</p>
-        <span className="inline-flex items-center ml-2 h-4 w-4">
+        <p className="text-sm md:text-base inline align-middle">{innerText}</p>
+        <span className="inline-flex items-center align-middle ml-2 h-4 w-4">
           {copied ? (
             <span className="inline-block text-green-500 -ml-1">
               <BsCheckAll size={'1.5rem'} />
