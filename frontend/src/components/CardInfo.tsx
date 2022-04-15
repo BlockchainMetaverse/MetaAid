@@ -12,9 +12,9 @@ const CardInfo: FC<CardInfo> = ({ info }) => {
       <div className="py-2">
         <div className="rounded-full bg-aid-blue w-full h-0 pb-full relative">
           <img
-            className="opacity-30 w-2/3 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            src="./images/dove.png"
-            alt="dove"
+            className="opacity-80 w-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full"
+            src={`./images/${info.imgFileName}`}
+            alt="programmer"
           />
           {/* outline style */}
           <span className="block absolute -inset-2 rounded-full border-2 border-indigo-200 transform transition duration-500 delay-100 group hover:rotate-180">
