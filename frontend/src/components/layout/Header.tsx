@@ -37,7 +37,7 @@ const Header: FC = () => {
             <div className="flex items-center justify-between w-full md:w-auto relative z-30">
               <Link to="/">
                 <img
-                  className="h-8 w-auto md:h-10"
+                  className="h-12 w-auto md:h-14"
                   src="./images/logo_text.svg"
                   alt="Meta aid Logo"
                 />
