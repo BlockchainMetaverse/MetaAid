@@ -89,11 +89,11 @@ export const teamInfo: InfoType = {
       platform: PlatformEnum.GITHUB,
       link: 'https://github.com/BlockchainMetaverse/MetaAid',
     },
-    {
-      id: PlatformCodeEnum.LINKEDIN,
-      platform: PlatformEnum.LINKEDIN,
-      link: 'todo..',
-    },
+    // {
+    //   id: PlatformCodeEnum.LINKEDIN,
+    //   platform: PlatformEnum.LINKEDIN,
+    //   link: 'todo..',
+    // },
   ],
 }
 

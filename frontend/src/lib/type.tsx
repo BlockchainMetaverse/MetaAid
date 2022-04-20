@@ -51,15 +51,15 @@ export interface SnsType {
 }
 
 export const enum PlatformEnum {
-  GITHUB = 'github',
-  DISCORD = 'discord',
-  FACEBOOK = 'facebook',
-  INSTAGRAM = 'instagram',
-  TWITTER = 'twitter',
-  TELEGRAM = 'telegram',
-  YOUTUBE = 'youtube',
-  ROCKET = 'rocket',
-  LINKEDIN = 'linkedin',
+  GITHUB = 'Github',
+  DISCORD = 'Discord',
+  FACEBOOK = 'Facebook',
+  INSTAGRAM = 'Instagram',
+  TWITTER = 'Twitter',
+  TELEGRAM = 'Telegram',
+  YOUTUBE = 'Youtube',
+  ROCKET = 'Rocket',
+  LINKEDIN = 'Linkedin',
 }
 
 export const enum PlatformCodeEnum {
