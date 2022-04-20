@@ -6,6 +6,19 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { languages, Languages, initLanguage } from '../../lang/i18n'
+import {
+  FaGithub,
+  FaDiscord,
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaTelegram,
+  FaYoutube,
+  FaRocket,
+  FaLinkedin,
+} from 'react-icons/fa'
+import { teamInfo } from '../../data/response'
+import { PlatformEnum } from '../../lib/type'
 
 const Header: FC = () => {
   const { t, i18n } = useTranslation()
@@ -92,7 +105,7 @@ const Header: FC = () => {
                     <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
-                <div className="px-2 pt-2 pb-3 space-y-1 text-center">
+                <div className="px-2 py-5 space-y-1 text-center">
                   {navigation.map((item) => (
                     <div key={item.name}>
                       <Popover.Button>
@@ -103,6 +116,29 @@ const Header: FC = () => {
                         </Link>
                       </Popover.Button>
                     </div>
+                  ))}
+                </div>
+                <div className="md:hidden flex absolute bottom-10 left-0 right-0 justify-center">
+                  {teamInfo.snsList.map((sns, index) => (
+                    <a
+                      key={index}
+                      href={sns.link}
+                      target="_blank"
+                      className="flex items-center px-1 mx-2"
+                      rel="noreferrer">
+                      <span className="text-2xl">
+                        {sns.platform === PlatformEnum.GITHUB && <FaGithub />}
+                        {sns.platform === PlatformEnum.DISCORD && <FaDiscord />}
+                        {sns.platform === PlatformEnum.FACEBOOK && <FaFacebook />}
+                        {sns.platform === PlatformEnum.INSTAGRAM && <FaInstagram />}
+                        {sns.platform === PlatformEnum.TWITTER && <FaTwitter />}
+                        {sns.platform === PlatformEnum.TELEGRAM && <FaTelegram />}
+                        {sns.platform === PlatformEnum.YOUTUBE && <FaYoutube />}
+                        {sns.platform === PlatformEnum.ROCKET && <FaRocket />}
+                        {sns.platform === PlatformEnum.LINKEDIN && <FaLinkedin />}
+                      </span>
+                      <span className="pl-2">{sns.platform}</span>
+                    </a>
                   ))}
                 </div>
                 {/* <button
