@@ -1,4 +1,3 @@
-import { t } from 'i18next'
 import {
   FileFormatEnum,
   ImageInfoType,
@@ -18,12 +17,12 @@ export const walletList: WalletClassType[] = [
   {
     id: 1,
     type: 'META_MASK',
-    title: t('wallet.meta_mask'),
+    title: 'MetaMask',
   },
   // {
   //   id: 2,
   //   type: 'WALLET_CONNECT',
-  //   title: t('wallet.wallet_connect'),
+  //   title: 'WalletConnect',
   // },
 ]
 
